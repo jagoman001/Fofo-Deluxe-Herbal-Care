@@ -196,8 +196,6 @@ function FofoDeluxeHome() {
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
         <div className="flex justify-center gap-2">
           <span>Free UK shipping over £40</span>
-          <span className="text-amber-500">•</span>
-          <span>Free returns within 14 days</span>
         </div>
       </div>
 
@@ -209,10 +207,10 @@ function FofoDeluxeHome() {
             <span className="font-serif text-xl tracking-tight text-emerald-950">Fofo Deluxe</span>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm text-emerald-950">
-            <button onClick={() => scrollTo("shop")} className="hover:text-amber-700 transition-colors">Shop</button>
-            <button onClick={() => scrollTo("about")} className="hover:text-amber-700 transition-colors">About Us</button>
-            <button onClick={() => scrollTo("reviews")} className="hover:text-amber-700 transition-colors">Reviews</button>
-            <button onClick={() => scrollTo("faq")} className="hover:text-amber-700 transition-colors">FAQ</button>
+            <button onClick={() => scrollTo("about")} className="hover:text-amber-700 transition-colors">About</button>
+            <button onClick={() => scrollTo("shop")} className="hover:text-amber-700 transition-colors">Explore Best Sellers</button>
+            <button onClick={() => { setActiveCategory("Bundles"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Sets &amp; Kits</button>
+            <button onClick={() => { setActiveCategory("All"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Shop All</button>
           </nav>
           <button onClick={() => setCartOpen(true)} className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
             <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
@@ -225,30 +223,80 @@ function FofoDeluxeHome() {
       </header>
 
       {/* ---------- HERO ---------- */}
-      <section className="max-w-6xl mx-auto px-5 pt-12 pb-16 md:pt-16 md:pb-20 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <div className="inline-flex items-center gap-2 bg-emerald-950/5 rounded-full px-3 py-1.5 mb-5">
-            <StarRating rating="4.9" />
-            <span className="text-xs text-stone-600">Trusted by 1,000+ customers</span>
+      <section className="max-w-6xl mx-auto px-5 pt-12 pb-16 md:pt-16 md:pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+          {/* Left: copy */}
+          <div className="text-left">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-1">
+                <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                <span className="text-sm text-stone-700 font-medium">4.9</span>
+              </div>
+              <span className="h-4 w-px bg-stone-300" />
+              <div className="flex items-center -space-x-2">
+                <img src={almondScrubImg} alt="" className="w-7 h-7 rounded-full border-2 border-white object-cover" />
+                <img src={manCreamImg} alt="" className="w-7 h-7 rounded-full border-2 border-white object-cover" />
+              </div>
+              <span className="text-sm text-stone-600">20k Happy Customers</span>
+            </div>
+
+            <h1 className="font-serif font-bold text-4xl md:text-6xl leading-[1.05] tracking-tight text-emerald-950 mb-5">
+              Love Your Skin Again
+            </h1>
+
+            <p className="text-stone-600 max-w-md text-[15px] leading-relaxed mb-8">
+              Trusted by over 20k customers, with 10 years of experience creating organic, gentle skincare designed to help you achieve healthier, radiant skin.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 mb-10">
+              <button onClick={() => scrollTo("shop")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
+                Shop Now
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </button>
+              <a href="https://wa.me/447445865238" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-emerald-950/20 text-emerald-950 text-sm font-medium hover:bg-emerald-950/5 transition-colors">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
+                </svg>
+                Free Consultation
+              </a>
+            </div>
+
+            <div className="flex items-center gap-5">
+              <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden shrink-0">
+                <img src={heroImg} alt="Fofo Deluxe" className="w-full h-full object-cover" />
+              </div>
+              <div>
+                <p className="font-serif text-3xl text-emerald-950">98%</p>
+                <p className="text-sm text-stone-500 leading-snug mt-1 max-w-[220px]">
+                  of customers noticed visible improvement within 7 days*
+                </p>
+              </div>
+            </div>
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl leading-[1.05] tracking-tight text-emerald-950">
-            Herbal Skincare, Effortlessly Yours
-          </h1>
-          <p className="mt-5 text-stone-600 max-w-md text-[15px] leading-relaxed">
-            Small-batch botanical formulas, shea, moringa, neem, turmeric, blended by hand, shipped fresh across the UK.
-          </p>
-          <button onClick={() => scrollTo("shop")} className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
-            Shop Now
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </button>
-        </div>
-        <div className="relative">
-          <div className="rounded-3xl overflow-hidden aspect-[4/5] md:aspect-square">
-            <img src={heroImg} alt="Fofo Deluxe herbal ingredients" className="w-full h-full object-cover" />
-          </div>
-          <div className="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-lg px-5 py-4 max-w-[200px] border border-emerald-900/10">
-            <p className="font-serif text-2xl text-emerald-950">98%</p>
-            <p className="text-xs text-stone-500 leading-snug mt-1">of customers noticed visible improvement within 4 weeks*</p>
+
+          {/* Right: Acne & Pimple Solution Set promo, side by side with the hero copy */}
+          <div className="relative rounded-3xl overflow-hidden h-[420px] md:h-[520px]">
+            <img src={almondScrubImg} alt="Acne and Pimple Solution Set" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-950/40 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+              <h2 className="font-serif font-bold text-2xl md:text-3xl text-stone-50 leading-tight mb-2">
+                Acne and Pimple Solution Set
+              </h2>
+              <p className="font-serif font-bold text-base md:text-xl text-amber-400 mb-3">
+                Our Best-Seller For 3 Years Running (2023–2025)
+              </p>
+              <p className="text-stone-200 text-sm leading-relaxed mb-6">
+                Actively battles acne, eczema, psoriasis, dermatitis, hyperpigmentation, tags, moles, melasma, scabies, and other skin infections.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button onClick={() => scrollTo("shop")} className="px-5 py-2.5 rounded-full bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 transition-colors">
+                  Buy Now, 20% Off
+                </button>
+                <button onClick={() => scrollTo("shop")} className="px-5 py-2.5 rounded-full border border-stone-50/40 text-stone-50 text-sm font-medium hover:bg-stone-50/10 transition-colors">
+                  Explore Other Best Sellers
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -256,8 +304,8 @@ function FofoDeluxeHome() {
       {/* ---------- CATEGORIES ---------- */}
       <section className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
-          <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">Our Categories</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-emerald-950">Curated Skincare for Every Need</h2>
+          <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">15% Discount Off</p>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Shop More Best Sellers</h2>
         </Reveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
@@ -289,7 +337,7 @@ function FofoDeluxeHome() {
         <div className="max-w-6xl mx-auto px-5 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
             <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">About Us</p>
-            <h2 className="font-serif text-3xl md:text-4xl leading-snug mb-5">
+            <h2 className="font-serif font-bold text-3xl md:text-4xl leading-snug mb-5">
               We didn't invent these recipes. We just stopped diluting them.
             </h2>
             <p className="text-stone-300 leading-relaxed mb-8 max-w-md">
@@ -323,7 +371,7 @@ function FofoDeluxeHome() {
         <div className="max-w-6xl mx-auto px-5 py-16 md:py-24">
           <Reveal>
             <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">Our Journey</p>
-            <h2 className="font-serif text-3xl md:text-4xl mb-10">Year After Year</h2>
+            <h2 className="font-serif font-bold text-3xl md:text-4xl mb-10">Year After Year</h2>
           </Reveal>
           <Reveal>
             <div className="flex items-baseline gap-8 md:gap-16 mb-8">
@@ -363,7 +411,7 @@ function FofoDeluxeHome() {
       <section id="shop" className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
           <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">Our Product</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-emerald-950">Elevate Your Ritual</h2>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Elevate Your Ritual</h2>
         </Reveal>
         <div className="mb-5 flex gap-2 overflow-x-auto">
           {CATEGORIES.map((cat) => (
@@ -419,7 +467,7 @@ function FofoDeluxeHome() {
         <div className="max-w-3xl mx-auto px-5 py-16 md:py-24 text-center">
           <Reveal>
             <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">Testimonials</p>
-            <h2 className="font-serif text-3xl md:text-4xl mb-8">Skincare That Speaks for Itself</h2>
+            <h2 className="font-serif font-bold text-3xl md:text-4xl mb-8">Skincare That Speaks for Itself</h2>
 
             <div className="flex justify-center items-center gap-2 mb-8">
               <div className="flex">
@@ -483,7 +531,7 @@ function FofoDeluxeHome() {
       <section id="faq" className="max-w-3xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10 text-center">
           <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">FAQ</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-emerald-950">Beauty Questions? Let's Clear Things Up</h2>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Beauty Questions? Let's Clear Things Up</h2>
         </Reveal>
         <div className="flex flex-col gap-3">
           {FAQS.map((faq, i) => (
@@ -504,7 +552,7 @@ function FofoDeluxeHome() {
       <section className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
           <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">Blog</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-emerald-950">Skincare Insights &amp; Tips</h2>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Skincare Insights &amp; Tips</h2>
         </Reveal>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {[
@@ -560,7 +608,7 @@ function FofoDeluxeHome() {
       {/* ---------- NEWSLETTER ---------- */}
       <section className="bg-emerald-950 text-stone-100">
         <div className="max-w-3xl mx-auto px-5 py-16 md:py-20 text-center">
-          <h2 className="font-serif text-3xl md:text-4xl mb-3">Your Glow Awaits</h2>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl mb-3">Your Glow Awaits</h2>
           <p className="text-stone-300 mb-8">Get early access to new drops and routine tips.</p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
             <input type="email" placeholder="Your email" className="flex-1 px-4 py-3 rounded-full text-sm text-stone-900 focus:outline-none" />
