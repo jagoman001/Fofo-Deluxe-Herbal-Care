@@ -2,17 +2,27 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ArrowLeft,
   ArrowRight,
+  Award,
+  Ban,
   CheckCircle2,
   ChevronDown,
   Check,
+  Droplets,
+  Eye,
+  Facebook,
+  Instagram,
   Leaf,
   Loader2,
   Mail,
   Minus,
   Phone,
   Plus,
+  ShieldCheck,
   ShoppingBag,
+  ShoppingCart,
+  Sparkles,
   Star,
+  Truck,
   X,
   XCircle,
 } from "lucide-react";
@@ -129,6 +139,38 @@ function FofoDeluxeHome() {
   const [activeYear, setActiveYear] = useState(TIMELINE.length - 1);
   const [showAntiAgeingInfo, setShowAntiAgeingInfo] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const reviewScrollRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const el = reviewScrollRef.current;
+    if (!el) return;
+    const card = el.children[testimonialIndex];
+    if (card) {
+      el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
+    }
+  }, [testimonialIndex]);
+
+  const handleReviewScroll = () => {
+    const el = reviewScrollRef.current;
+    if (!el) return;
+    let closest = 0;
+    let minDist = Infinity;
+    Array.from(el.children).forEach((child, i) => {
+      const dist = Math.abs(child.offsetLeft - el.scrollLeft);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+    if (closest !== testimonialIndex) setTestimonialIndex(closest);
+  };
   const [expandedPost, setExpandedPost] = useState(null);
   const [form, setForm] = useState({ email: "", full_name: "", phone: "", line1: "", line2: "", city: "", postcode: "" });
 
@@ -193,6 +235,10 @@ function FofoDeluxeHome() {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+        .font-serif { font-family: 'Lora', serif !important; }
+      `}</style>
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
         <div className="flex justify-center gap-2">
@@ -213,13 +259,26 @@ function FofoDeluxeHome() {
             <button onClick={() => { setActiveCategory("Bundles"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Sets &amp; Kits</button>
             <button onClick={() => { setActiveCategory("All"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Shop All</button>
           </nav>
-          <button onClick={() => setCartOpen(true)} className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
-            <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
-            Cart
-            {cartCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-700 text-white text-[11px] flex items-center justify-center font-mono">{cartCount}</span>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://wa.me/447445865238"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat with us on WhatsApp"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
+            >
+              <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-current" aria-hidden="true">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
+              </svg>
+            </a>
+            <button onClick={() => setCartOpen(true)} className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
+              <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
+              Cart
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-700 text-white text-[11px] flex items-center justify-center font-mono">{cartCount}</span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -251,6 +310,7 @@ function FofoDeluxeHome() {
 
             <div className="flex flex-wrap items-center gap-3 mb-10">
               <button onClick={() => scrollTo("shop")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
+                <ShoppingCart className="w-4 h-4" strokeWidth={1.5} />
                 Shop Now
                 <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
               </button>
@@ -438,35 +498,44 @@ function FofoDeluxeHome() {
 
       {/* ---------- TESTIMONIALS ---------- */}
       <section id="reviews" className="bg-emerald-950 text-stone-100">
-        <div className="max-w-3xl mx-auto px-5 py-16 md:py-24 text-center">
-          <Reveal>
+        <div className="max-w-6xl mx-auto px-5 py-16 md:py-24">
+          <Reveal className="text-center mb-10">
             <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">Testimonials</p>
-            <h2 className="font-serif font-bold text-3xl md:text-4xl mb-8">Skincare That Speaks for Itself</h2>
+            <h2 className="font-serif font-bold text-3xl md:text-4xl">Skincare That Speaks for Itself</h2>
+          </Reveal>
 
-            <div className="flex justify-center items-center gap-2 mb-8">
-              <div className="flex">
-                {[1, 2, 3, 4].map((n) => (
-                  <Star key={n} className="w-4 h-4 fill-amber-500 text-amber-500" />
-                ))}
-                <Star className="w-4 h-4 fill-amber-500/50 text-amber-500" />
-              </div>
-              <span className="text-sm text-stone-300">{TESTIMONIALS[testimonialIndex].rating}</span>
+          <div className="relative">
+            <div
+              ref={reviewScrollRef}
+              onScroll={handleReviewScroll}
+              className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 -mx-5 px-5 md:mx-0 md:px-0"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <div
+                  key={i}
+                  className="snap-center shrink-0 w-[85%] sm:w-[360px] bg-stone-50/5 border border-stone-50/10 rounded-2xl p-6 md:p-7 text-left"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-stone-700 shrink-0">
+                      <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <p className="font-serif text-sm">{t.name}</p>
+                      <div className="flex items-center gap-0.5 mt-0.5">
+                        {[1, 2, 3, 4].map((n) => (
+                          <Star key={n} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                        ))}
+                        <Star className="w-3.5 h-3.5 fill-amber-500/50 text-amber-500" />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-stone-200 text-sm leading-relaxed">"{t.quote}"</p>
+                </div>
+              ))}
             </div>
 
-            <p className="font-serif text-xl md:text-2xl italic leading-relaxed mb-8 min-h-[7rem] md:min-h-[6rem]">
-              "{TESTIMONIALS[testimonialIndex].quote}"
-            </p>
-
-            <div className="w-14 h-14 rounded-full overflow-hidden mx-auto mb-3 bg-stone-700">
-              <img
-                src={TESTIMONIALS[testimonialIndex].photo}
-                alt="Customer"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <p className="font-serif mb-6">{TESTIMONIALS[testimonialIndex].name}</p>
-
-            <div className="flex justify-center items-center gap-6">
+            <div className="flex justify-center items-center gap-6 mt-8">
               <button
                 onClick={() => setTestimonialIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
                 className="w-9 h-9 rounded-full border border-stone-50/20 flex items-center justify-center hover:bg-stone-50/10 transition-colors"
@@ -493,35 +562,15 @@ function FofoDeluxeHome() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
+          </div>
 
-            <p className="text-xs text-stone-400 mt-6">
-              *Illustrative placeholder reviews, swap in real customer quotes once available.
-            </p>
-          </Reveal>
+          <p className="text-xs text-stone-400 mt-6 text-center">
+            *Illustrative placeholder reviews, swap in real customer quotes once available.
+          </p>
         </div>
       </section>
 
       {/* ---------- FAQ ---------- */}
-      <section id="faq" className="max-w-3xl mx-auto px-5 py-16 md:py-20">
-        <Reveal className="mb-10 text-center">
-          <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">FAQ</p>
-          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Beauty Questions? Let's Clear Things Up</h2>
-        </Reveal>
-        <div className="flex flex-col gap-3">
-          {FAQS.map((faq, i) => (
-            <div key={i} className="bg-white rounded-xl border border-emerald-900/10 overflow-hidden">
-              <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} className="w-full flex items-center justify-between px-5 py-4 text-left">
-                <span className="font-serif text-emerald-950 text-sm md:text-base">{faq.q}</span>
-                <ChevronDown className={`w-4 h-4 text-stone-500 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
-              </button>
-              {openFaq === i && (
-                <div className="px-5 pb-4 text-sm text-stone-600 leading-relaxed">{faq.a}</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ---------- BLOG ---------- */}
       <section className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
@@ -579,50 +628,128 @@ function FofoDeluxeHome() {
         </p>
       </section>
 
-      {/* ---------- NEWSLETTER ---------- */}
+      <section id="faq" className="max-w-3xl mx-auto px-5 py-16 md:py-20">
+        <Reveal className="mb-10 text-center">
+          <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">FAQ</p>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Beauty Questions? Let's Clear Things Up</h2>
+        </Reveal>
+        <div className="flex flex-col gap-3">
+          {FAQS.map((faq, i) => (
+            <div key={i} className="bg-white rounded-xl border border-emerald-900/10 overflow-hidden">
+              <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} className="w-full flex items-center justify-between px-5 py-4 text-left">
+                <span className="font-serif text-emerald-950 text-sm md:text-base">{faq.q}</span>
+                <ChevronDown className={`w-4 h-4 text-stone-500 shrink-0 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+              </button>
+              {openFaq === i && (
+                <div className="px-5 pb-4 text-sm text-stone-600 leading-relaxed">{faq.a}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------- TRUST BADGES ---------- */}
+      <section className="bg-white border-y border-emerald-900/10">
+        <div className="max-w-6xl mx-auto px-5 py-10 md:py-12">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-x-4 gap-y-8 text-center">
+            {[
+              { label: "Organic Ingredients", Icon: Leaf },
+              { label: "Visible Results", Icon: Eye },
+              { label: "Fast Absorbing", Icon: Droplets },
+              { label: "No Harsh Chemicals", Icon: Ban },
+              { label: "7 Years Trusted", Icon: Award },
+              { label: "Free Shipping", Icon: Truck },
+              { label: "Daily Safe", Icon: ShieldCheck },
+              { label: "Anti-Ageing", Icon: Sparkles },
+            ].map(({ label, Icon }) => (
+              <div key={label} className="flex flex-col items-center gap-2">
+                <p className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-wide text-amber-700 leading-tight">{label}</p>
+                <Icon className="w-7 h-7 md:w-8 md:h-8 text-amber-700" strokeWidth={1.5} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- COMMUNITY CTA ---------- */}
       <section className="bg-emerald-950 text-stone-100">
         <div className="max-w-3xl mx-auto px-5 py-16 md:py-20 text-center">
-          <h2 className="font-serif font-bold text-3xl md:text-4xl mb-3">Your Glow Awaits</h2>
-          <p className="text-stone-300 mb-8">Get early access to new drops and routine tips.</p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Your email" className="flex-1 px-4 py-3 rounded-full text-sm text-stone-900 focus:outline-none" />
-            <button type="submit" className="px-6 py-3 rounded-full bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 transition-colors">Subscribe</button>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl mb-3">Join Our Skincare Community</h2>
+          <p className="text-stone-300 mb-8 max-w-md mx-auto">
+            Be the first to discover exclusive offers and special discounts delivered straight to you.
+          </p>
+          <form className="flex items-center gap-3 max-w-md mx-auto border-b border-stone-50/30 pb-2 mb-10" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Enter your email" className="flex-1 bg-transparent text-stone-50 placeholder-stone-400 text-sm focus:outline-none" />
+            <button type="submit" aria-label="Subscribe" className="text-stone-50 hover:text-amber-500 transition-colors">
+              <Mail className="w-5 h-5" strokeWidth={1.5} />
+            </button>
           </form>
+
+          <div className="flex items-center justify-center gap-4">
+            <a href="#" aria-label="Instagram" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
+              <Instagram className="w-4.5 h-4.5" strokeWidth={1.5} />
+            </a>
+            <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
+              <Facebook className="w-4.5 h-4.5" strokeWidth={1.5} />
+            </a>
+            <a href="#" aria-label="TikTok" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
+              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
+                <path d="M16.6 5.82c-.7-.77-1.09-1.77-1.09-2.82H12.9v13.44c0 1.34-1.08 2.42-2.42 2.42a2.42 2.42 0 0 1-2.42-2.42 2.42 2.42 0 0 1 2.42-2.42c.24 0 .48.04.7.1V10.4a5.2 5.2 0 0 0-.7-.05A5.24 5.24 0 0 0 5.24 15.6a5.24 5.24 0 0 0 5.24 5.24c2.9 0 5.24-2.35 5.24-5.24V9.02a8.16 8.16 0 0 0 4.76 1.53V7.85a4.85 4.85 0 0 1-3.88-2.03z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="eBay" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
+              <svg viewBox="0 0 32 16" className="w-5 h-3" aria-hidden="true">
+                <text x="0" y="13" fontFamily="Arial, sans-serif" fontSize="13" fontWeight="bold" fill="currentColor">eBay</text>
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ---------- FOOTER ---------- */}
-      <footer className="bg-stone-900 text-stone-300">
-        <div className="max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-4 gap-10">
+      <footer className="bg-white text-stone-600 border-t border-emerald-900/10">
+        <div className="max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-2 gap-12">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Leaf className="w-5 h-5 text-amber-500" strokeWidth={1.5} />
-              <span className="font-serif text-xl text-stone-50">Fofo Deluxe</span>
+            <div className="flex items-center gap-2 mb-8">
+              <img src={logoIconImg} alt="" className="h-7 w-7" />
+              <span className="font-serif text-xl text-emerald-950">Fofo Deluxe</span>
             </div>
-            <p className="text-sm text-stone-400 leading-relaxed">Herbal skincare, blended in small batches and shipped across the UK.</p>
+            <h4 className="font-serif text-emerald-950 mb-2">Visit Us</h4>
+            <p className="text-sm text-stone-500 leading-relaxed mb-4">Kent, UK</p>
+            <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-emerald-900/20 flex items-center justify-center hover:bg-emerald-950/5 transition-colors">
+              <Instagram className="w-4 h-4" strokeWidth={1.5} />
+            </a>
           </div>
-          <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-amber-500 mb-4">Shop</h4>
-            <ul className="flex flex-col gap-2 text-sm">
-              <li>Face</li><li>Body</li><li>Hair</li><li>Bundles</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-amber-500 mb-4">Pages</h4>
-            <ul className="flex flex-col gap-2 text-sm">
-              <li>About Us</li><li>FAQ</li><li>Contact</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-mono text-xs uppercase tracking-widest text-amber-500 mb-4">Contact</h4>
-            <ul className="flex flex-col gap-2 text-sm">
-              <li className="flex items-center gap-2"><Mail className="w-3.5 h-3.5" />hello@fofodeluxe.com</li>
-              <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" />United Kingdom</li>
-            </ul>
+          <div className="grid grid-cols-3 gap-6">
+            <div>
+              <h4 className="font-serif text-emerald-950 mb-4">Shop</h4>
+              <ul className="flex flex-col gap-3 text-sm text-stone-500">
+                <li>Face</li><li>Body</li><li>Hair</li><li>Bundles</li><li>Best Sellers</li><li>Sets &amp; Kits</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-serif text-emerald-950 mb-4">Categories</h4>
+              <ul className="flex flex-col gap-3 text-sm text-stone-500">
+                {BENEFIT_TAGS.filter((tag) => tag !== "All You Need").map((tag) => <li key={tag}>{tag}</li>)}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-serif text-emerald-950 mb-4">Pages</h4>
+              <ul className="flex flex-col gap-3 text-sm text-stone-500">
+                <li>About Us</li><li>Shop All Products</li><li>Blog &amp; Skincare Tips</li><li>FAQs</li><li>Contact Us</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="border-t border-stone-50/10 py-5 text-center text-xs text-stone-500">
-          © {new Date().getFullYear()} Fofo Deluxe Herbal Skincare. All rights reserved.
+        <div className="border-t border-emerald-900/10 py-5">
+          <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500">
+            <span>© {new Date().getFullYear()} Fofo Deluxe Herbal Skincare. All rights reserved.</span>
+            <div className="flex items-center gap-5">
+              <span>Terms &amp; Conditions</span>
+              <span>Privacy Policy</span>
+              <span>Return Policy</span>
+            </div>
+          </div>
         </div>
       </footer>
 
