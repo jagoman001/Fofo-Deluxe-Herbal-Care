@@ -192,7 +192,7 @@ function FofoDeluxeHome() {
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans">
+    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
         <div className="flex justify-center gap-2">
