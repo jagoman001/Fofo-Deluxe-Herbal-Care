@@ -127,6 +127,7 @@ function FofoDeluxeHome() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [activeYear, setActiveYear] = useState(TIMELINE.length - 1);
+  const [showAntiAgeingInfo, setShowAntiAgeingInfo] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [expandedPost, setExpandedPost] = useState(null);
   const [form, setForm] = useState({ email: "", full_name: "", phone: "", line1: "", line2: "", city: "", postcode: "" });
@@ -332,37 +333,33 @@ function FofoDeluxeHome() {
         </div>
       </section>
 
-      {/* ---------- ABOUT / STATS ---------- */}
-      <section id="about" className="bg-emerald-950 text-stone-100">
-        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center">
-          <Reveal>
-            <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">About Us</p>
-            <h2 className="font-serif font-bold text-3xl md:text-4xl leading-snug mb-5">
-              We didn't invent these recipes. We just stopped diluting them.
-            </h2>
-            <p className="text-stone-300 leading-relaxed mb-8 max-w-md">
-              Fofo Deluxe blends whole-plant formulas, shea, neem, turmeric, black soap, in small batches, skipping everything that doesn't need to be there.
-            </p>
-            <div className="grid grid-cols-3 gap-6">
-              <div>
-                <p className="font-serif text-3xl text-amber-500">100%</p>
-                <p className="text-xs text-stone-400 mt-1">clean, whole-plant ingredients</p>
+      {/* ---------- ANTI-AGEING PROMO ---------- */}
+      <section id="about" className="bg-stone-50">
+        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
+          <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
+            <Reveal className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
+              <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-4">Anti-Ageing</p>
+              <h2 className="font-serif font-bold text-3xl md:text-4xl leading-snug text-emerald-950 mb-5">
+                Restore Your Youth With Our Latest Anti-Ageing Set
+              </h2>
+              {showAntiAgeingInfo && (
+                <p className="text-stone-600 leading-relaxed mb-6 max-w-sm">
+                  Powered by our Bio-Active Complex to help reduce the appearance of fine lines, wrinkles, and signs of ageing, revealing firmer, smoother, more youthful-looking skin.
+                </p>
+              )}
+              <button
+                onClick={() => setShowAntiAgeingInfo((v) => !v)}
+                className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium tracking-wide hover:bg-emerald-900 transition-colors"
+              >
+                {showAntiAgeingInfo ? "Read Less" : "Read More"}
+              </button>
+            </Reveal>
+            <Reveal className="order-1 md:order-2">
+              <div className="aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
+                <img src={manCreamImg} alt="Fofo Deluxe Anti-Ageing Set" className="w-full h-full object-cover" />
               </div>
-              <div>
-                <p className="font-serif text-3xl text-amber-500">1,000+</p>
-                <p className="text-xs text-stone-400 mt-1">customers across the UK</p>
-              </div>
-              <div>
-                <p className="font-serif text-3xl text-amber-500">0</p>
-                <p className="text-xs text-stone-400 mt-1">synthetic fillers, ever</p>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="rounded-3xl overflow-hidden aspect-square">
-              <img src={almondScrubImg} alt="Fofo Deluxe ingredients" className="w-full h-full object-cover" />
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -411,34 +408,11 @@ function FofoDeluxeHome() {
       <section id="shop" className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
           <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">Our Product</p>
-          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Elevate Your Ritual</h2>
+          <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950 mb-4">Shop All Categories</h2>
+          <p className="text-stone-600 leading-relaxed max-w-lg">
+            Discover the perfect products to transform your skin, restore your confidence, and reveal your healthiest glow.
+          </p>
         </Reveal>
-        <div className="mb-5 flex gap-2 overflow-x-auto">
-          {CATEGORIES.map((cat) => (
-            <button key={cat} onClick={() => setActiveCategory(cat)} className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${activeCategory === cat ? "bg-emerald-950 text-stone-50 border-emerald-950" : "bg-transparent text-emerald-900 border-emerald-900/20 hover:border-emerald-900/50"}`}>
-              {cat}
-            </button>
-          ))}
-        </div>
-        <div className="mb-8 flex flex-wrap gap-2">
-          {BENEFIT_TAGS.map((tag) => {
-            const isActive = selectedTags.includes(tag);
-            return (
-              <button
-                key={tag}
-                onClick={() => toggleTag(tag)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                  isActive
-                    ? "bg-emerald-950 text-stone-50 border-emerald-950"
-                    : "bg-white text-stone-600 border-emerald-900/15 hover:border-emerald-900/40"
-                }`}
-              >
-                {isActive && <Check className="w-3 h-3" />}
-                {tag}
-              </button>
-            );
-          })}
-        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {filteredProducts.map((product) => (
             <div key={product.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-emerald-900/10 hover:border-emerald-900/25 transition-colors">
