@@ -413,6 +413,13 @@ function FofoDeluxeHome() {
 
       {/* ---------- ANTI-AGEING PROMO ---------- */}
       <section id="about" className="bg-stone-50">
+        <div className="relative h-[280px] md:h-[420px] overflow-hidden">
+          <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-emerald-950/25" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h2 className="font-serif text-5xl md:text-7xl text-stone-50">About us</h2>
+          </div>
+        </div>
         <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
           <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
             <Reveal className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
