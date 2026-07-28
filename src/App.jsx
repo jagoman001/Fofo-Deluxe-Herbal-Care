@@ -166,39 +166,6 @@ function FofoDeluxeHome() {
   const [openFaq, setOpenFaq] = useState(0);
   const [activeYear, setActiveYear] = useState(TIMELINE.length - 1);
   const [showAntiAgeingInfo, setShowAntiAgeingInfo] = useState(false);
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const reviewScrollRef = useRef(null);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const el = reviewScrollRef.current;
-    if (!el) return;
-    const card = el.children[testimonialIndex];
-    if (card) {
-      el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
-    }
-  }, [testimonialIndex]);
-
-  const handleReviewScroll = () => {
-    const el = reviewScrollRef.current;
-    if (!el) return;
-    let closest = 0;
-    let minDist = Infinity;
-    Array.from(el.children).forEach((child, i) => {
-      const dist = Math.abs(child.offsetLeft - el.scrollLeft);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    });
-    if (closest !== testimonialIndex) setTestimonialIndex(closest);
-  };
   const [expandedPost, setExpandedPost] = useState(null);
   const [form, setForm] = useState({ email: "", full_name: "", phone: "", line1: "", line2: "", city: "", postcode: "" });
 
@@ -266,6 +233,34 @@ function FofoDeluxeHome() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
         .font-serif { font-family: 'Lora', serif !important; }
+
+        .reviews-marquee-viewport {
+          overflow: hidden;
+          width: 100%;
+          -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        }
+        .reviews-marquee-track {
+          display: flex;
+          gap: 1.5rem;
+          width: max-content;
+          animation: reviews-marquee-scroll 32s linear infinite;
+        }
+        .reviews-marquee-viewport:hover .reviews-marquee-track {
+          animation-play-state: paused;
+        }
+        .reviews-marquee-card {
+          flex: 0 0 auto;
+          width: 260px;
+          text-align: left;
+        }
+        @media (min-width: 640px) {
+          .reviews-marquee-card { width: 300px; }
+        }
+        @keyframes reviews-marquee-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
       `}</style>
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
@@ -295,7 +290,7 @@ function FofoDeluxeHome() {
               aria-label="Chat with us on WhatsApp"
               className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
             >
-              <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-current" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current" aria-hidden="true">
                 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
               </svg>
             </a>
@@ -534,71 +529,30 @@ function FofoDeluxeHome() {
               Faces Glow ✨
             </h2>
           </Reveal>
+        </div>
 
-          <div className="relative">
-            <button
-              onClick={() => setTestimonialIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
-              aria-label="Previous testimonial"
-              className="hidden md:flex absolute -left-5 top-1/3 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-emerald-950 text-stone-50 items-center justify-center hover:bg-emerald-900 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length)}
-              aria-label="Next testimonial"
-              className="hidden md:flex absolute -right-5 top-1/3 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-emerald-950 text-stone-50 items-center justify-center hover:bg-emerald-900 transition-colors"
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <div
-              ref={reviewScrollRef}
-              onScroll={handleReviewScroll}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 -mx-5 px-5 md:mx-0 md:px-0"
-              style={{ scrollbarWidth: "none" }}
-            >
-              {TESTIMONIALS.map((t, i) => (
-                <div key={i} className="snap-center shrink-0 w-[80%] sm:w-[45%] md:w-[calc(33.333%-16px)] text-left">
-                  <div className="aspect-square rounded-xl overflow-hidden bg-stone-100 mb-4">
-                    <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
-                  </div>
-                  <p className="text-stone-600 text-sm leading-relaxed italic mb-3">"{t.quote}"</p>
-                  <div className="flex items-center gap-2">
-                    <p className="font-serif text-sm text-emerald-950">{t.name}</p>
-                    <div className="flex items-center gap-0.5">
-                      {Array.from({ length: 5 }).map((_, n) => (
-                        <Star
-                          key={n}
-                          className={`w-3.5 h-3.5 ${n < Math.round(t.rating) ? "fill-amber-500 text-amber-500" : "fill-stone-200 text-stone-200"}`}
-                        />
-                      ))}
-                    </div>
+        <div className="reviews-marquee-viewport">
+          <div className="reviews-marquee-track">
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+              <div key={i} className="reviews-marquee-card">
+                <div className="aspect-square rounded-xl overflow-hidden bg-stone-100 mb-4">
+                  <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
+                </div>
+                <p className="text-stone-600 text-sm leading-relaxed italic mb-3">"{t.quote}"</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-serif text-sm text-emerald-950">{t.name}</p>
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, n) => (
+                      <Star
+                        key={n}
+                        className={`w-3.5 h-3.5 ${n < Math.round(t.rating) ? "fill-amber-500 text-amber-500" : "fill-stone-200 text-stone-200"}`}
+                      />
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-
-            <div className="flex md:hidden justify-center items-center gap-4 mt-6">
-              <button
-                onClick={() => setTestimonialIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
-                aria-label="Previous testimonial"
-                className="w-10 h-10 rounded-full bg-emerald-950 text-stone-50 flex items-center justify-center hover:bg-emerald-900 transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length)}
-                aria-label="Next testimonial"
-                className="w-10 h-10 rounded-full bg-emerald-950 text-stone-50 flex items-center justify-center hover:bg-emerald-900 transition-colors"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+              </div>
+            ))}
           </div>
-
-          <p className="text-xs text-stone-400 mt-8 text-center">
-            *Illustrative placeholder reviews, swap in real customer quotes once available.
-          </p>
         </div>
       </section>
 
@@ -719,10 +673,10 @@ function FofoDeluxeHome() {
 
           <div className="flex items-center justify-center gap-4">
             <a href="#" aria-label="Instagram" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
-              <InstagramIcon className="w-4.5 h-4.5" />
+              <InstagramIcon className="w-[18px] h-[18px]" />
             </a>
             <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
-              <FacebookIcon className="w-4.5 h-4.5" />
+              <FacebookIcon className="w-[18px] h-[18px]" />
             </a>
             <a href="#" aria-label="TikTok" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
               <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
