@@ -167,6 +167,29 @@ function FofoDeluxeHome() {
   const [activeYear, setActiveYear] = useState(TIMELINE.length - 1);
   const [showAntiAgeingInfo, setShowAntiAgeingInfo] = useState(false);
   const [expandedPost, setExpandedPost] = useState(null);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const touchStartX = useRef(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (delta > 40) {
+      setTestimonialIndex((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    } else if (delta < -40) {
+      setTestimonialIndex((i) => (i + 1) % TESTIMONIALS.length);
+    }
+    touchStartX.current = null;
+  };
   const [form, setForm] = useState({ email: "", full_name: "", phone: "", line1: "", line2: "", city: "", postcode: "" });
 
   const filteredProducts = useMemo(() => {
@@ -233,34 +256,6 @@ function FofoDeluxeHome() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
         .font-serif { font-family: 'Lora', serif !important; }
-
-        .reviews-marquee-viewport {
-          overflow: hidden;
-          width: 100%;
-          -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-          mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-        }
-        .reviews-marquee-track {
-          display: flex;
-          gap: 1.5rem;
-          width: max-content;
-          animation: reviews-marquee-scroll 32s linear infinite;
-        }
-        .reviews-marquee-viewport:hover .reviews-marquee-track {
-          animation-play-state: paused;
-        }
-        .reviews-marquee-card {
-          flex: 0 0 auto;
-          width: 260px;
-          text-align: left;
-        }
-        @media (min-width: 640px) {
-          .reviews-marquee-card { width: 300px; }
-        }
-        @keyframes reviews-marquee-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
       `}</style>
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
@@ -529,29 +524,50 @@ function FofoDeluxeHome() {
               Faces Glow ✨
             </h2>
           </Reveal>
-        </div>
 
-        <div className="reviews-marquee-viewport">
-          <div className="reviews-marquee-track">
-            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
-              <div key={i} className="reviews-marquee-card">
-                <div className="aspect-square rounded-xl overflow-hidden bg-stone-100 mb-4">
-                  <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
-                </div>
-                <p className="text-stone-600 text-sm leading-relaxed italic mb-3">"{t.quote}"</p>
-                <div className="flex items-center gap-2">
-                  <p className="font-serif text-sm text-emerald-950">{t.name}</p>
-                  <div className="flex items-center gap-0.5">
-                    {Array.from({ length: 5 }).map((_, n) => (
-                      <Star
-                        key={n}
-                        className={`w-3.5 h-3.5 ${n < Math.round(t.rating) ? "fill-amber-500 text-amber-500" : "fill-stone-200 text-stone-200"}`}
-                      />
-                    ))}
+          <div className="max-w-sm mx-auto">
+            <div
+              className="overflow-hidden rounded-2xl"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div
+                className="flex transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(-${testimonialIndex * 100}%)` }}
+              >
+                {TESTIMONIALS.map((t, i) => (
+                  <div key={i} className="w-full shrink-0 text-left">
+                    <div className="aspect-square rounded-xl overflow-hidden bg-stone-100 mb-4">
+                      <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
+                    </div>
+                    <p className="text-stone-600 text-sm leading-relaxed italic mb-3">"{t.quote}"</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-serif text-sm text-emerald-950">{t.name}</p>
+                      <div className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, n) => (
+                          <Star
+                            key={n}
+                            className={`w-3.5 h-3.5 ${n < Math.round(t.rating) ? "fill-amber-500 text-amber-500" : "fill-stone-200 text-stone-200"}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div className="flex justify-center items-center gap-2 mt-6">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setTestimonialIndex(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  className="w-2 h-2 rounded-full transition-colors"
+                  style={{ backgroundColor: testimonialIndex === i ? "#1c3a2e" : "#d6d3d1" }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -609,9 +625,6 @@ function FofoDeluxeHome() {
             </Reveal>
           ))}
         </div>
-        <p className="text-xs text-stone-400 mt-6">
-          *Placeholder blog posts, replace with real articles once written, or link out to your actual blog.
-        </p>
       </section>
 
       <section id="faq" className="max-w-3xl mx-auto px-5 py-16 md:py-20">
