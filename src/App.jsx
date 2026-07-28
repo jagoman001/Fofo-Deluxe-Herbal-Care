@@ -416,6 +416,34 @@ function FofoDeluxeHome() {
         <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
           <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
             <Reveal className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
+              <p className="text-stone-600 leading-relaxed mb-8 max-w-sm">
+                We believe in the transformative power of African botanicals, combining nature's finest ingredients with carefully crafted organic skincare to help people achieve healthier, clearer, and more radiant skin.
+              </p>
+              <button
+                onClick={() => scrollTo("shop")}
+                className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium tracking-wide hover:bg-emerald-900 transition-colors mb-10"
+              >
+                Shop Now
+              </button>
+              <div>
+                <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-1">Founder &amp; CEO</p>
+                <p className="font-serif font-bold text-lg text-emerald-950">Folusho Faleye Onafowokan</p>
+              </div>
+            </Reveal>
+            <Reveal className="order-1 md:order-2">
+              <div className="aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
+                <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- ANTI-AGEING PROMO ---------- */}
+      <section className="bg-stone-50">
+        <div className="max-w-6xl mx-auto px-5 pb-16 md:pb-20">
+          <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
+            <Reveal className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
               <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-4">Anti-Ageing</p>
               <h2 className="font-serif font-bold text-3xl md:text-4xl leading-snug text-emerald-950 mb-5">
                 Restore Your Youth With Our Latest Anti-Ageing Set
