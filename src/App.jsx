@@ -68,13 +68,6 @@ const BENEFIT_TAGS = ["All You Need", "Cleanse", "Hydrate", "Exfoliate", "Soothe
 
 const CATEGORIES = ["All", "Face", "Body", "Hair", "Bundles"];
 
-const TIMELINE = [
-  { year: "2023", title: "Where it started", text: "First batches blended in a home kitchen, sold to friends and family across Lagos and London." },
-  { year: "2024", title: "First real orders", text: "Word of mouth grew the customer base past 100, and the recipes got refined based on real feedback." },
-  { year: "2025", title: "Small-batch, scaled up", text: "Moved into a proper small-batch production space, kept every ingredient the same, just made more of it." },
-  { year: "2026", title: "Small batches, built to last", text: "What started as recipes blended in a home kitchen is now a growing range shipped across the UK, same whole-plant ingredients, same small-batch process, just more hands helped along the way." },
-];
-
 const TESTIMONIALS = [
   {
     name: "Amara O.",
@@ -114,6 +107,29 @@ const FAQS = [
   { q: "How do I know which products are right for me?", a: "Each product page lists the skin concerns it targets. If you're unsure, message us on WhatsApp and we'll help you build a routine." },
   { q: "What is your return policy?", a: "Unopened products can be returned within 14 days of delivery. Contact us to arrange a return." },
   { q: "How can I contact customer support?", a: "Email hello@fofodeluxe.com or reach us on WhatsApp, details in the footer." },
+];
+
+const POLICIES = [
+  {
+    q: "Refund Policy",
+    a: "For hygiene and product safety reasons, all sales are final. We do not accept returns or exchanges for opened or used products. If your order arrives damaged, defective, or incorrect, please contact us within 10 days of delivery with your order number and photos of the item. We will review your request and, where appropriate, provide a replacement or refund.",
+  },
+  {
+    q: "Shipping Policy",
+    a: "We carefully prepare every order to ensure it arrives in perfect condition. Orders are processed within 1–3 business days, excluding weekends and holidays. Once your order has been shipped, you will receive a confirmation email with tracking information. Delivery times may vary depending on your location and carrier.",
+  },
+  {
+    q: "Privacy Policy",
+    a: "Your privacy is important to us. Any personal information you provide is used only to process your orders, improve your shopping experience, and communicate with you when necessary. We do not sell or share your personal information with third parties except where required to complete your order or comply with legal obligations.",
+  },
+  {
+    q: "Terms & Conditions",
+    a: "By using our website and placing an order, you agree to our policies, pricing, and terms of service. We reserve the right to update product information, pricing, and these terms at any time without prior notice. Continued use of our website constitutes acceptance of any changes.",
+  },
+  {
+    q: "Cancellation Policy",
+    a: "Orders may only be cancelled before they have been processed or shipped. Once an order has been dispatched, it cannot be cancelled. If you need to request a cancellation, please contact our Customer Support team as soon as possible, and we will do our best to assist you.",
+  },
 ];
 
 function formatGBP(pence) {
@@ -163,7 +179,6 @@ function FofoDeluxeHome() {
   const [checkoutError, setCheckoutError] = useState("");
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
-  const [activeYear, setActiveYear] = useState(TIMELINE.length - 1);
   const [showAntiAgeingInfo, setShowAntiAgeingInfo] = useState(false);
   const [expandedPost, setExpandedPost] = useState(null);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -408,43 +423,21 @@ function FofoDeluxeHome() {
         </div>
       </section>
 
-      {/* ---------- OUR JOURNEY / TIMELINE ---------- */}
+      {/* ---------- ANTI-AGEING VIDEO ---------- */}
       <section className="bg-emerald-950 text-stone-100 border-t border-stone-50/10">
-        <div className="max-w-6xl mx-auto px-5 py-16 md:py-24">
-          <Reveal>
-            <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-4">Our Journey</p>
-            <h2 className="font-serif font-bold text-3xl md:text-4xl mb-10">Year After Year</h2>
-          </Reveal>
-          <Reveal>
-            <div className="flex items-baseline gap-8 md:gap-16 mb-8">
-              {TIMELINE.map((t, i) => (
-                <button
-                  key={t.year}
-                  onClick={() => setActiveYear(i)}
-                  className={`font-serif text-4xl md:text-7xl transition-colors ${
-                    activeYear === i ? "text-stone-50" : "text-emerald-700 hover:text-emerald-500"
-                  }`}
-                >
-                  {t.year}
-                </button>
-              ))}
+        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
+          <Reveal className="max-w-md">
+            <p className="font-mono text-xs tracking-widest uppercase text-amber-500 mb-3">Anti-Ageing Cream</p>
+            <div className="aspect-video rounded-2xl overflow-hidden border border-stone-50/10">
+              <iframe
+                src="https://www.youtube.com/embed/zC0g8t66rUM"
+                title="Anti-ageing cream"
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
-            <div className="h-px bg-stone-50/20 relative mb-8">
-              {TIMELINE.map((t, i) => (
-                <button
-                  key={t.year}
-                  onClick={() => setActiveYear(i)}
-                  className="absolute -top-1.5 w-3 h-3 rounded-full transition-colors"
-                  style={{
-                    left: `${(i / (TIMELINE.length - 1)) * 100}%`,
-                    backgroundColor: activeYear === i ? "#f59e0b" : "#78716c",
-                  }}
-                  aria-label={`View ${t.year}`}
-                />
-              ))}
-            </div>
-            <p className="font-serif text-xl md:text-2xl mb-4">{TIMELINE[activeYear].title}</p>
-            <p className="text-stone-300 leading-relaxed max-w-lg">{TIMELINE[activeYear].text}</p>
           </Reveal>
         </div>
       </section>
@@ -762,7 +755,7 @@ function SiteHeader() {
     { label: "Explore Best Sellers", href: "/#shop" },
     { label: "Sets & Kits", href: "/#shop" },
     { label: "Shop All", href: "/#shop" },
-    { label: "Support", href: "/#faq" },
+    { label: "Support", href: "/support" },
   ];
   return (
     <header className="sticky top-0 z-30 bg-stone-50/95 backdrop-blur border-b border-emerald-900/10">
@@ -829,7 +822,7 @@ function SiteFooter() {
               <li><a href="/#shop" className="hover:text-amber-700 transition-colors">Shop All Products</a></li>
               <li><a href="/#blog" className="hover:text-amber-700 transition-colors">Blog &amp; Skincare Tips</a></li>
               <li><a href="/#faq" className="hover:text-amber-700 transition-colors">FAQs</a></li>
-              <li><a href="https://wa.me/447445865238" target="_blank" rel="noopener noreferrer" className="hover:text-amber-700 transition-colors">Contact Us</a></li>
+              <li><a href="/support" className="hover:text-amber-700 transition-colors">Contact Us</a></li>
             </ul>
           </div>
         </div>
@@ -936,6 +929,148 @@ function AboutPage() {
             <p className="text-stone-600 leading-relaxed max-w-lg mx-auto md:mx-0">
               For over 10 years, I have believed that beautiful skin is something worth protecting. I founded this brand with one purpose, to help people preserve their youthful glow and feel confident in their skin at every stage of life. Every ingredient I choose and every formula I create is guided by decades of experience and a commitment to lasting results. My passion has always been to create skincare that supports healthy, radiant skin so you can look in the mirror and see the very best version of yourself, today and for many years to come.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+      <FloatingWhatsApp />
+    </div>
+  );
+}
+
+// ---- /support ----
+function SupportPage() {
+  const [openPolicy, setOpenPolicy] = useState(-1);
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", subject: "", message: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const body = `Name: ${form.firstName} ${form.lastName}%0AEmail: ${form.email}%0A%0A${form.message}`;
+    window.location.href = `mailto:hello@fofodeluxe.com?subject=${encodeURIComponent(form.subject)}&body=${body}`;
+  };
+
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+        .font-serif { font-family: 'Lora', serif !important; }
+        html { scroll-behavior: smooth; }
+      `}</style>
+
+      <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
+        <div className="flex justify-center gap-2">
+          <span>Free shipping within UK</span>
+        </div>
+      </div>
+
+      <SiteHeader />
+
+      <section className="bg-stone-50">
+        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
+          <h1 className="font-serif font-bold text-3xl md:text-5xl text-center text-emerald-950 mb-12 tracking-wide">
+            CONTACT US
+          </h1>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            <div className="rounded-2xl overflow-hidden h-[320px] md:h-full min-h-[400px]">
+              <iframe
+                title="Fofo Deluxe location"
+                src="https://www.google.com/maps?q=Kent,+UK&output=embed"
+                className="w-full h-full border-0"
+                loading="lazy"
+              />
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <div>
+                <p className="font-serif text-lg text-emerald-950 mb-3">Name</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-stone-500">First Name <span className="italic">(required)</span></label>
+                    <input
+                      required
+                      value={form.firstName}
+                      onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                      className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-emerald-900/15 text-sm focus:outline-none focus:border-emerald-900/40"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-stone-500">Last Name <span className="italic">(required)</span></label>
+                    <input
+                      required
+                      value={form.lastName}
+                      onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                      className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-emerald-900/15 text-sm focus:outline-none focus:border-emerald-900/40"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="font-serif text-lg text-emerald-950">Email Address <span className="text-xs italic text-stone-500">(required)</span></label>
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-emerald-900/15 text-sm focus:outline-none focus:border-emerald-900/40"
+                />
+              </div>
+
+              <div>
+                <label className="font-serif text-lg text-emerald-950">Subject <span className="text-xs italic text-stone-500">(required)</span></label>
+                <input
+                  required
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                  className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-emerald-900/15 text-sm focus:outline-none focus:border-emerald-900/40"
+                />
+              </div>
+
+              <div>
+                <label className="font-serif text-lg text-emerald-950">Message <span className="text-xs italic text-stone-500">(required)</span></label>
+                <textarea
+                  required
+                  rows={5}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className="w-full mt-1 px-3 py-2.5 rounded-lg bg-white border border-emerald-900/15 text-sm focus:outline-none focus:border-emerald-900/40 resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- SUPPORT FAQ / POLICIES ---------- */}
+      <section className="bg-emerald-700 text-stone-50">
+        <div className="max-w-4xl mx-auto px-5 py-16 md:py-20">
+          <h2 className="font-serif font-bold text-2xl md:text-3xl mb-10">Policies &amp; Support</h2>
+          <div className="flex flex-col">
+            {POLICIES.map((item, i) => (
+              <div key={i} className="border-t border-stone-50/25 last:border-b">
+                <button
+                  onClick={() => setOpenPolicy(openPolicy === i ? -1 : i)}
+                  className="w-full flex items-center justify-between py-5 text-left"
+                >
+                  <span className="font-serif text-base md:text-lg">{item.q}</span>
+                  <span className="shrink-0 w-8 h-8 rounded-full bg-stone-50 text-emerald-800 flex items-center justify-center">
+                    {openPolicy === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  </span>
+                </button>
+                {openPolicy === i && (
+                  <p className="text-sm text-stone-100 leading-relaxed pb-6 max-w-3xl">{item.a}</p>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1083,5 +1218,6 @@ export default function App() {
   if (path === "/order-confirmed") return <OrderConfirmed />;
   if (path === "/checkout-cancelled") return <CheckoutCancelled />;
   if (path === "/about") return <AboutPage />;
+  if (path === "/support") return <SupportPage />;
   return <FofoDeluxeHome />;
 }
