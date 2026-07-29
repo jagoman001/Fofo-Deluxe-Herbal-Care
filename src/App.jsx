@@ -12,6 +12,7 @@ import {
   Leaf,
   Loader2,
   Mail,
+  Menu,
   Minus,
   Phone,
   Plus,
@@ -750,6 +751,7 @@ function FofoDeluxeHome() {
 
 // ---------- SHARED HEADER (used on Home and About page) ----------
 function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const navLinks = [
     { label: "About", href: "/about" },
     { label: "Explore Best Sellers", href: "/#shop" },
@@ -759,32 +761,57 @@ function SiteHeader() {
   ];
   return (
     <header className="sticky top-0 z-30 bg-stone-50/95 backdrop-blur border-b border-emerald-900/10">
-      <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img src={logoIconImg} alt="" className="h-7 w-7" />
-          <span className="font-serif text-xl tracking-tight text-emerald-950">Fofo Deluxe</span>
+      <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between gap-3">
+        <div className="flex-1 flex items-center gap-6 min-w-0">
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Open menu"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors shrink-0"
+          >
+            {menuOpen ? <X className="w-4 h-4" strokeWidth={1.5} /> : <Menu className="w-4 h-4" strokeWidth={1.5} />}
+          </button>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-emerald-950 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            {navLinks.map((link) => (
+              <a key={link.label} href={link.href} className="shrink-0 hover:text-amber-700 transition-colors">
+                {link.label}
+              </a>
+            ))}
+          </nav>
         </div>
-        <a
-          href="https://wa.me/447445865238"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat with us on WhatsApp"
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
-        >
-          <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current" aria-hidden="true">
-            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
-          </svg>
+
+        <a href="/" className="flex items-center gap-2 shrink-0">
+          <img src={logoIconImg} alt="" className="h-7 w-7" />
+          <span className="font-serif text-xl tracking-tight text-emerald-950 whitespace-nowrap">Fofo Deluxe</span>
         </a>
+
+        <div className="flex-1 flex items-center justify-end">
+          <a
+            href="https://wa.me/447445865238"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with us on WhatsApp"
+            className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors shrink-0"
+          >
+            <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current" aria-hidden="true">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
+            </svg>
+          </a>
+        </div>
       </div>
-      <nav className="border-t border-emerald-900/10">
-        <div className="max-w-6xl mx-auto px-5 flex items-center gap-6 overflow-x-auto text-sm text-emerald-950" style={{ scrollbarWidth: "none" }}>
+      {menuOpen && (
+        <nav className="md:hidden border-t border-emerald-900/10 bg-stone-50 flex flex-col px-5 py-4 gap-1">
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} className="shrink-0 py-3 hover:text-amber-700 transition-colors">
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="py-2.5 text-sm text-emerald-950 hover:text-amber-700 transition-colors"
+            >
               {link.label}
             </a>
           ))}
-        </div>
-      </nav>
+        </nav>
+      )}
     </header>
   );
 }
