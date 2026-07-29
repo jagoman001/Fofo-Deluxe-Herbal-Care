@@ -269,8 +269,10 @@ function FofoDeluxeHome() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-        .font-serif { font-family: 'Lora', serif !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+        .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+        .font-sans { font-family: 'Roboto', sans-serif !important; }
+        body { font-family: 'Roboto', sans-serif; }
         html { scroll-behavior: smooth; }
       `}</style>
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
@@ -892,8 +894,10 @@ function AboutPage() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-        .font-serif { font-family: 'Lora', serif !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+        .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+        .font-sans { font-family: 'Roboto', sans-serif !important; }
+        body { font-family: 'Roboto', sans-serif; }
         html { scroll-behavior: smooth; }
       `}</style>
 
@@ -980,8 +984,10 @@ function SupportPage() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-        .font-serif { font-family: 'Lora', serif !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+        .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+        .font-sans { font-family: 'Roboto', sans-serif !important; }
+        body { font-family: 'Roboto', sans-serif; }
         html { scroll-behavior: smooth; }
       `}</style>
 
