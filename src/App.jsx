@@ -16,7 +16,6 @@ import {
   Phone,
   Plus,
   ShieldCheck,
-  ShoppingBag,
   ShoppingCart,
   Sparkles,
   Star,
@@ -256,49 +255,17 @@ function FofoDeluxeHome() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
         .font-serif { font-family: 'Lora', serif !important; }
+        html { scroll-behavior: smooth; }
       `}</style>
       {/* ---------- ANNOUNCEMENT BAR ---------- */}
       <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
         <div className="flex justify-center gap-2">
-          <span>Free UK shipping over £40</span>
+          <span>Free shipping within UK</span>
         </div>
       </div>
 
       {/* ---------- HEADER ---------- */}
-      <header className="sticky top-0 z-30 bg-stone-50/95 backdrop-blur border-b border-emerald-900/10">
-        <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src={logoIconImg} alt="" className="h-7 w-7" />
-            <span className="font-serif text-xl tracking-tight text-emerald-950">Fofo Deluxe</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-emerald-950">
-            <button onClick={() => scrollTo("about")} className="hover:text-amber-700 transition-colors">About</button>
-            <button onClick={() => scrollTo("shop")} className="hover:text-amber-700 transition-colors">Explore Best Sellers</button>
-            <button onClick={() => { setActiveCategory("Bundles"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Sets &amp; Kits</button>
-            <button onClick={() => { setActiveCategory("All"); scrollTo("shop"); }} className="hover:text-amber-700 transition-colors">Shop All</button>
-          </nav>
-          <div className="flex items-center gap-3">
-            <a
-              href="https://wa.me/447445865238"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Chat with us on WhatsApp"
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current" aria-hidden="true">
-                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
-              </svg>
-            </a>
-            <button onClick={() => setCartOpen(true)} className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium hover:bg-emerald-900 transition-colors">
-              <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
-              Cart
-              {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-amber-700 text-white text-[11px] flex items-center justify-center font-mono">{cartCount}</span>
-              )}
-            </button>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* ---------- HERO ---------- */}
       <section className="max-w-6xl mx-auto px-5 pt-12 pb-16 md:pt-16 md:pb-20">
@@ -347,7 +314,7 @@ function FofoDeluxeHome() {
               <div>
                 <p className="font-serif text-3xl text-emerald-950">98%</p>
                 <p className="text-sm text-stone-500 leading-snug mt-1 max-w-[220px]">
-                  of customers noticed visible improvement within 7 days*
+                  of customers noticed visible improvement within 7 days
                 </p>
               </div>
             </div>
@@ -408,41 +375,6 @@ function FofoDeluxeHome() {
               </button>
             </Reveal>
           ))}
-        </div>
-      </section>
-
-      {/* ---------- ANTI-AGEING PROMO ---------- */}
-      <section id="about" className="bg-stone-50">
-        <div className="relative h-[280px] md:h-[420px] overflow-hidden">
-          <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-emerald-950/25" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <h2 className="font-serif text-5xl md:text-7xl text-stone-50">About us</h2>
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
-          <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
-            <Reveal className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
-              <p className="text-stone-600 leading-relaxed mb-8 max-w-sm">
-                We believe in the transformative power of African botanicals, combining nature's finest ingredients with carefully crafted organic skincare to help people achieve healthier, clearer, and more radiant skin.
-              </p>
-              <button
-                onClick={() => scrollTo("shop")}
-                className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium tracking-wide hover:bg-emerald-900 transition-colors mb-10"
-              >
-                Shop Now
-              </button>
-              <div>
-                <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-1">Founder &amp; CEO</p>
-                <p className="font-serif font-bold text-lg text-emerald-950">Folusho Faleye Onafowokan</p>
-              </div>
-            </Reveal>
-            <Reveal className="order-1 md:order-2">
-              <div className="aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
-                <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
 
@@ -609,7 +541,7 @@ function FofoDeluxeHome() {
 
       {/* ---------- FAQ ---------- */}
       {/* ---------- BLOG ---------- */}
-      <section className="max-w-6xl mx-auto px-5 py-16 md:py-20">
+      <section id="blog" className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <Reveal className="mb-10">
           <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-3">Blog</p>
           <h2 className="font-serif font-bold text-3xl md:text-4xl text-emerald-950">Skincare Insights &amp; Tips</h2>
@@ -741,51 +673,8 @@ function FofoDeluxeHome() {
       </section>
 
       {/* ---------- FOOTER ---------- */}
-      <footer className="bg-white text-stone-600 border-t border-emerald-900/10">
-        <div className="max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-2 gap-12">
-          <div>
-            <div className="flex items-center gap-2 mb-8">
-              <img src={logoIconImg} alt="" className="h-7 w-7" />
-              <span className="font-serif text-xl text-emerald-950">Fofo Deluxe</span>
-            </div>
-            <h4 className="font-serif text-emerald-950 mb-2">Visit Us</h4>
-            <p className="text-sm text-stone-500 leading-relaxed mb-4">Kent, UK</p>
-            <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-emerald-900/20 flex items-center justify-center hover:bg-emerald-950/5 transition-colors">
-              <InstagramIcon className="w-4 h-4" />
-            </a>
-          </div>
-          <div className="grid grid-cols-3 gap-6">
-            <div>
-              <h4 className="font-serif text-emerald-950 mb-4">Shop</h4>
-              <ul className="flex flex-col gap-3 text-sm text-stone-500">
-                <li>Face</li><li>Body</li><li>Hair</li><li>Bundles</li><li>Best Sellers</li><li>Sets &amp; Kits</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-serif text-emerald-950 mb-4">Categories</h4>
-              <ul className="flex flex-col gap-3 text-sm text-stone-500">
-                {BENEFIT_TAGS.filter((tag) => tag !== "All You Need").map((tag) => <li key={tag}>{tag}</li>)}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-serif text-emerald-950 mb-4">Pages</h4>
-              <ul className="flex flex-col gap-3 text-sm text-stone-500">
-                <li>About Us</li><li>Shop All Products</li><li>Blog &amp; Skincare Tips</li><li>FAQs</li><li>Contact Us</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-emerald-900/10 py-5">
-          <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500">
-            <span>© {new Date().getFullYear()} Fofo Deluxe Herbal Skincare. All rights reserved.</span>
-            <div className="flex items-center gap-5">
-              <span>Terms &amp; Conditions</span>
-              <span>Privacy Policy</span>
-              <span>Return Policy</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
+      <FloatingWhatsApp />
 
       {/* ---------- CART DRAWER ---------- */}
       {cartOpen && (
@@ -862,6 +751,197 @@ function FofoDeluxeHome() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ---------- SHARED HEADER (used on Home and About page) ----------
+function SiteHeader() {
+  const navLinks = [
+    { label: "About", href: "/about" },
+    { label: "Explore Best Sellers", href: "/#shop" },
+    { label: "Sets & Kits", href: "/#shop" },
+    { label: "Shop All", href: "/#shop" },
+    { label: "Support", href: "/#faq" },
+  ];
+  return (
+    <header className="sticky top-0 z-30 bg-stone-50/95 backdrop-blur border-b border-emerald-900/10">
+      <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img src={logoIconImg} alt="" className="h-7 w-7" />
+          <span className="font-serif text-xl tracking-tight text-emerald-950">Fofo Deluxe</span>
+        </div>
+        <a
+          href="https://wa.me/447445865238"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat with us on WhatsApp"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
+        >
+          <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current" aria-hidden="true">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
+          </svg>
+        </a>
+      </div>
+      <nav className="border-t border-emerald-900/10">
+        <div className="max-w-6xl mx-auto px-5 flex items-center gap-6 overflow-x-auto text-sm text-emerald-950" style={{ scrollbarWidth: "none" }}>
+          {navLinks.map((link) => (
+            <a key={link.label} href={link.href} className="shrink-0 py-3 hover:text-amber-700 transition-colors">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+// ---------- SHARED FOOTER (used on Home and About page) ----------
+function SiteFooter() {
+  return (
+    <footer className="bg-white text-stone-600 border-t border-emerald-900/10">
+      <div className="max-w-6xl mx-auto px-5 py-16 grid md:grid-cols-2 gap-12">
+        <div>
+          <div className="flex items-center gap-2 mb-8">
+            <img src={logoIconImg} alt="" className="h-7 w-7" />
+            <span className="font-serif text-xl text-emerald-950">Fofo Deluxe</span>
+          </div>
+          <h4 className="font-serif text-emerald-950 mb-2">Visit Us</h4>
+          <p className="text-sm text-stone-500 leading-relaxed mb-4">Kent, UK</p>
+        </div>
+        <div className="grid grid-cols-3 gap-6">
+          <div>
+            <h4 className="font-serif text-emerald-950 mb-4">Shop</h4>
+            <ul className="flex flex-col gap-3 text-sm text-stone-500">
+              <li>Face</li><li>Body</li><li>Hair</li><li>Bundles</li><li>Best Sellers</li><li>Sets &amp; Kits</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-serif text-emerald-950 mb-4">Categories</h4>
+            <ul className="flex flex-col gap-3 text-sm text-stone-500">
+              {BENEFIT_TAGS.filter((tag) => tag !== "All You Need").map((tag) => <li key={tag}>{tag}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-serif text-emerald-950 mb-4">Pages</h4>
+            <ul className="flex flex-col gap-3 text-sm text-stone-500">
+              <li><a href="/about" className="hover:text-amber-700 transition-colors">About Us</a></li>
+              <li><a href="/#shop" className="hover:text-amber-700 transition-colors">Shop All Products</a></li>
+              <li><a href="/#blog" className="hover:text-amber-700 transition-colors">Blog &amp; Skincare Tips</a></li>
+              <li><a href="/#faq" className="hover:text-amber-700 transition-colors">FAQs</a></li>
+              <li><a href="https://wa.me/447445865238" target="_blank" rel="noopener noreferrer" className="hover:text-amber-700 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-emerald-900/10 py-5">
+        <div className="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500">
+          <span>© {new Date().getFullYear()} Fofo Deluxe Herbal Skincare. All rights reserved.</span>
+          <div className="flex items-center gap-5">
+            <span>Terms &amp; Conditions</span>
+            <span>Privacy Policy</span>
+            <span>Return Policy</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ---------- FLOATING BLINKING WHATSAPP BUTTON ----------
+function FloatingWhatsApp() {
+  return (
+    <a
+      href="https://wa.me/447445865238"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with us on WhatsApp"
+      style={{ backgroundColor: "#25D366" }}
+      className="fixed bottom-5 right-5 z-40 flex items-center justify-center w-14 h-14 rounded-full text-white shadow-lg transition-colors"
+    >
+      <span style={{ backgroundColor: "#25D366" }} className="absolute inset-0 rounded-full animate-ping opacity-75" />
+      <svg viewBox="0 0 24 24" className="relative w-7 h-7 fill-current" aria-hidden="true">
+        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.12.11-1.8-.11a17.7 17.7 0 0 1-1.7-.63c-3-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.1 0-1.47.77-2.19 1.05-2.49.28-.3.6-.37.8-.37h.58c.19 0 .44-.07.68.53.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.15.33-.3.5-.15.18-.3.4-.44.54-.15.15-.3.31-.13.6.16.3.72 1.2 1.56 1.94 1.07.96 1.98 1.26 2.28 1.4.3.15.47.13.65-.07.17-.2.72-.84.92-1.13.2-.3.4-.24.65-.15.28.1 1.75.83 2.05.98.3.15.5.22.57.35.08.13.08.75-.15 1.43z"/>
+      </svg>
+    </a>
+  );
+}
+
+// ---- /about ----
+function AboutPage() {
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+        .font-serif { font-family: 'Lora', serif !important; }
+        html { scroll-behavior: smooth; }
+      `}</style>
+
+      <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
+        <div className="flex justify-center gap-2">
+          <span>Free shipping within UK</span>
+        </div>
+      </div>
+
+      <SiteHeader />
+
+      <section className="bg-stone-50">
+        <div className="relative h-[280px] md:h-[420px] overflow-hidden">
+          <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-emerald-950/25" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <h2 className="font-serif text-5xl md:text-7xl text-stone-50">About us</h2>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
+          <div className="grid md:grid-cols-2 rounded-3xl overflow-hidden border border-emerald-900/10">
+            <div className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-12 md:py-0 order-2 md:order-1">
+              <p className="text-stone-600 leading-relaxed mb-8 max-w-sm">
+                We believe in the transformative power of African botanicals, combining nature's finest ingredients with carefully crafted organic skincare to help people achieve healthier, clearer, and more radiant skin.
+              </p>
+              <a
+                href="/#shop"
+                className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium tracking-wide hover:bg-emerald-900 transition-colors mb-10"
+              >
+                Shop Now
+              </a>
+              <div>
+                <p className="font-mono text-xs tracking-widest uppercase text-amber-700 mb-1">Founder &amp; CEO</p>
+                <p className="font-serif font-bold text-lg text-emerald-950">Folusho Faleye Onafowokan</p>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <div className="aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
+                <img src={manCreamImg} alt="Fofo Deluxe products" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- FOUNDER STORY ---------- */}
+      <section className="bg-stone-50">
+        <div className="grid md:grid-cols-2">
+          <div className="h-[320px] md:h-[560px] overflow-hidden">
+            <img
+              src={bwPortraitImg}
+              alt="Fofo Deluxe founder"
+              className="w-full h-full object-cover grayscale"
+            />
+          </div>
+          <div className="bg-stone-100 flex flex-col justify-center px-6 py-12 md:px-16 md:py-0 text-center md:text-left">
+            <h2 className="font-serif text-3xl md:text-5xl leading-tight text-emerald-950 mb-6">
+              Your Skin, Younger Every Day
+            </h2>
+            <p className="text-stone-600 leading-relaxed max-w-lg mx-auto md:mx-0">
+              For over 10 years, I have believed that beautiful skin is something worth protecting. I founded this brand with one purpose, to help people preserve their youthful glow and feel confident in their skin at every stage of life. Every ingredient I choose and every formula I create is guided by decades of experience and a commitment to lasting results. My passion has always been to create skincare that supports healthy, radiant skin so you can look in the mirror and see the very best version of yourself, today and for many years to come.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+      <FloatingWhatsApp />
     </div>
   );
 }
@@ -1002,5 +1082,6 @@ export default function App() {
 
   if (path === "/order-confirmed") return <OrderConfirmed />;
   if (path === "/checkout-cancelled") return <CheckoutCancelled />;
+  if (path === "/about") return <AboutPage />;
   return <FofoDeluxeHome />;
 }
