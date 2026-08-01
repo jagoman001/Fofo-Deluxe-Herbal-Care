@@ -465,11 +465,11 @@ function FofoDeluxeHome() {
             Discover the perfect products to transform your skin, restore your confidence, and reveal your healthiest glow.
           </p>
         </Reveal>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredProducts.map((product) => (
             <div key={product.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-emerald-900/10 hover:border-emerald-900/25 transition-colors">
-              <div className="aspect-[3/4] overflow-hidden bg-stone-100">
-                <img src={product.image} alt={product.name} className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-500" />
+              <div className="aspect-square overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-3.5 md:p-4 flex flex-col gap-1 flex-1">
                 <div className="flex items-center justify-between">
