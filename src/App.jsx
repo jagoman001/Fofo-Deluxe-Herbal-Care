@@ -114,7 +114,7 @@ const SETS = [
   { id: "s1", name: "Anti Ageing Set", price: 5200, tagline: "Nourish, Renew, Glow — a complete 4-piece anti-ageing routine", rating: 4.9, sold: "1.6K", image: antiAgeingSetImg, pieces: "4-Piece Set" },
   { id: "s2", name: "Hair Duo", price: 3200, tagline: "Nourish & strengthen naturally with Hair Cream + Hair Oil", rating: 4.8, sold: "2.3K", image: hairDuoBoxImg, pieces: "2-Piece Set" },
   { id: "s3", name: "Acne and Pimple Solution Set", price: 3200, tagline: "A complete 4-step solution for clear, healthy skin", rating: 4.9, sold: "3.4K", image: acnePimpleSetImg, pieces: "4-Piece Set" },
-  { id: "s4", name: "Pink Lips Set", price: 1800, tagline: "Nourish, exfoliate & glow with our 4-piece lip care set", rating: 4.9, sold: "2.1K", image: acnePimpleFlatlayImg, pieces: "4-Piece Set" },
+  { id: "s4", name: "Pink Lips Set", price: 1800, tagline: "Nourish, exfoliate & glow with our 4-piece lip care set", rating: 4.9, sold: "2.1K", image: pinkLipsSetImg, pieces: "4-Piece Set" },
   { id: "s5", name: "Body Care Bundle", price: 3900, tagline: "Body Butter, Turmeric & Lemon Scrub and Pink Salt Shower Gel together", rating: 4.7, sold: "1.4K", image: bodyButterImg, pieces: "3-Piece Set" },
   { id: "s6", name: "Glow Duo", price: 4200, tagline: "Snow White Oil paired with our Whitening Face Serum for radiant skin", rating: 4.8, sold: "1.1K", image: snowWhiteOilImg, pieces: "2-Piece Set" },
 ];
