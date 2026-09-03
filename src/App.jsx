@@ -937,8 +937,8 @@ function ChatWidget() {
   );
 }
 
-// ---------- NEWSLETTER POPUP: "Get up to 50% off" ----------
-const NEWSLETTER_SEEN_KEY = "fofo_newsletter_seen";
+// ---------- NEWSLETTER POPUP: "Enjoy up to 50% off" ----------
+const NEWSLETTER_SUBSCRIBED_KEY = "fofo_newsletter_subscribed";
 
 function NewsletterPopup() {
   const [open, setOpen] = useState(false);
@@ -946,24 +946,19 @@ function NewsletterPopup() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    let seen = false;
+    let subscribed = false;
     try {
-      seen = window.localStorage.getItem(NEWSLETTER_SEEN_KEY) === "1";
+      subscribed = window.localStorage.getItem(NEWSLETTER_SUBSCRIBED_KEY) === "1";
     } catch {
-      seen = false;
+      subscribed = false;
     }
-    if (seen) return;
+    if (subscribed) return;
     const timer = setTimeout(() => setOpen(true), 3500);
     return () => clearTimeout(timer);
   }, []);
 
   const dismiss = () => {
     setOpen(false);
-    try {
-      window.localStorage.setItem(NEWSLETTER_SEEN_KEY, "1");
-    } catch {
-      // ignore storage errors
-    }
   };
 
   const handleSubmit = (e) => {
@@ -971,7 +966,7 @@ function NewsletterPopup() {
     if (!email.trim()) return;
     setSubmitted(true);
     try {
-      window.localStorage.setItem(NEWSLETTER_SEEN_KEY, "1");
+      window.localStorage.setItem(NEWSLETTER_SUBSCRIBED_KEY, "1");
     } catch {
       // ignore storage errors
     }
@@ -996,9 +991,8 @@ function NewsletterPopup() {
           >
             <X className="w-4 h-4" strokeWidth={1.5} />
           </button>
-          <p className="text-xs uppercase tracking-widest text-amber-400 mb-2">Fofo Deluxe Herbal Skincare</p>
           <h3 className="font-serif text-3xl text-stone-50 leading-tight">ENJOY UP TO 50% OFF</h3>
-          <p className="text-sm text-stone-300 mt-2">Join our newsletter for exclusive discounts and skincare tips.</p>
+          <p className="text-sm text-stone-300 mt-2">Sign up to enjoy exclusive discounts, free delivery, and lots more!</p>
         </div>
 
         <div className="px-6 py-6">
@@ -1023,14 +1017,14 @@ function NewsletterPopup() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Your email address"
+                placeholder="Enter your email"
                 className="w-full px-4 py-3 rounded-full border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
               />
               <button
                 type="submit"
                 className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
               >
-                Get My Discount
+                AND, YES, I WANT IN!
               </button>
               <button type="button" onClick={dismiss} className="text-xs text-stone-400 hover:text-stone-600 transition-colors self-center">
                 No thanks
