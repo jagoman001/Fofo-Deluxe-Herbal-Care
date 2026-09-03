@@ -937,11 +937,12 @@ function ChatWidget() {
   );
 }
 
-// ---------- NEWSLETTER POPUP: "Enjoy up to 50% off" ----------
+// ---------- NEWSLETTER TAG: persistent floating "Enjoy up to 50% off" ----------
 const NEWSLETTER_SUBSCRIBED_KEY = "fofo_newsletter_subscribed";
 
 function NewsletterPopup() {
-  const [open, setOpen] = useState(false);
+  const [tagOpen, setTagOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -953,13 +954,8 @@ function NewsletterPopup() {
       subscribed = false;
     }
     if (subscribed) return;
-    const timer = setTimeout(() => setOpen(true), 3500);
-    return () => clearTimeout(timer);
+    setTagOpen(true);
   }, []);
-
-  const dismiss = () => {
-    setOpen(false);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -972,67 +968,89 @@ function NewsletterPopup() {
     }
   };
 
-  if (!open) return null;
-
   return createPortal(
     <>
-      <div onClick={dismiss} aria-hidden="true" className="fixed inset-0 bg-black/50 z-40" />
-      <div
-        role="dialog"
-        aria-label="Newsletter offer"
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92%] max-w-sm bg-stone-50 rounded-2xl shadow-2xl overflow-hidden"
-      >
-        <div className="relative bg-emerald-950 px-6 py-8 text-center">
+      {tagOpen && (
+        <div className="fixed bottom-5 left-5 z-40 flex flex-col items-start">
           <button
             type="button"
-            onClick={dismiss}
-            aria-label="Close"
-            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-stone-50 hover:bg-white/10 transition-colors"
+            onClick={() => setTagOpen(false)}
+            aria-label="Dismiss offer"
+            className="mb-1 ml-auto self-end w-6 h-6 flex items-center justify-center rounded-full bg-white border border-emerald-900/10 text-stone-500 hover:text-stone-700 shadow"
           >
-            <X className="w-4 h-4" strokeWidth={1.5} />
+            <X className="w-3 h-3" strokeWidth={1.5} />
           </button>
-          <h3 className="font-serif text-3xl text-stone-50 leading-tight">ENJOY UP TO 50% OFF</h3>
-          <p className="text-sm text-stone-300 mt-2">Sign up to enjoy exclusive discounts, free delivery, and lots more!</p>
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="text-center text-sm font-medium px-5 py-3 rounded-xl bg-emerald-950 text-stone-50 shadow-lg hover:bg-emerald-900 transition-colors"
+          >
+            ENJOY UP TO 50% OFF
+          </button>
         </div>
+      )}
 
-        <div className="px-6 py-6">
-          {submitted ? (
-            <div className="text-center">
-              <p className="text-sm text-stone-600 leading-relaxed mb-4">
-                Thanks! Message us on WhatsApp with your email to claim your discount code.
-              </p>
-              <a
-                href={`https://wa.me/447445865238?text=${encodeURIComponent(`Hi! I signed up for the newsletter and would like my discount code. My email: ${email}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
-              >
-                Claim on WhatsApp
-              </a>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-full border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
-              />
+      {modalOpen && (
+        <>
+          <div onClick={() => setModalOpen(false)} aria-hidden="true" className="fixed inset-0 bg-black/50 z-40" />
+          <div
+            role="dialog"
+            aria-label="Newsletter offer"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92%] max-w-sm bg-stone-50 rounded-2xl shadow-2xl overflow-hidden"
+          >
+            <div className="relative bg-emerald-950 px-6 py-8 text-center">
               <button
-                type="submit"
-                className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+                type="button"
+                onClick={() => setModalOpen(false)}
+                aria-label="Close"
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-stone-50 hover:bg-white/10 transition-colors"
               >
-                YES, I WANT IN!
+                <X className="w-4 h-4" strokeWidth={1.5} />
               </button>
-              <button type="button" onClick={dismiss} className="text-xs text-stone-400 hover:text-stone-600 transition-colors self-center">
-                No thanks
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
+              <h3 className="font-serif text-3xl text-stone-50 leading-tight">ENJOY UP TO 50% OFF</h3>
+              <p className="text-sm text-stone-300 mt-2">Sign up to enjoy exclusive discounts, free delivery, and lots more!</p>
+            </div>
+
+            <div className="px-6 py-6">
+              {submitted ? (
+                <div className="text-center">
+                  <p className="text-sm text-stone-600 leading-relaxed mb-4">
+                    Thanks! Message us on WhatsApp with your email to claim your discount code.
+                  </p>
+                  <a
+                    href={`https://wa.me/447445865238?text=${encodeURIComponent(`Hi! I signed up for the newsletter and would like my discount code. My email: ${email}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+                  >
+                    Claim on WhatsApp
+                  </a>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 rounded-full border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
+                  />
+                  <button
+                    type="submit"
+                    className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+                  >
+                    YES, I WANT IN!
+                  </button>
+                  <button type="button" onClick={() => setModalOpen(false)} className="text-xs text-stone-400 hover:text-stone-600 transition-colors self-center">
+                    No thanks
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </>,
     document.body
   );
