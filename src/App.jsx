@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -473,7 +474,7 @@ function CartDrawer({ open, onClose }) {
     return `https://wa.me/447445865238?text=${encodeURIComponent(message)}`;
   };
 
-  return (
+  return createPortal(
     <>
       <div
         onClick={onClose}
@@ -582,7 +583,8 @@ function CartDrawer({ open, onClose }) {
           </div>
         )}
       </div>
-    </>
+    </>,
+    document.body
   );
 }
 
