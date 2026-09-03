@@ -820,6 +820,230 @@ function AuthModal({ open, onClose }) {
   );
 }
 
+// ---------- FAQ CHAT WIDGET: free keyword-matched answers, WhatsApp fallback ----------
+function scoreMatch(query, text) {
+  const qWords = query.toLowerCase().match(/[a-z0-9]+/g) || [];
+  const tWords = (text || "").toLowerCase().match(/[a-z0-9]+/g) || [];
+  const tSet = new Set(tWords);
+  let score = 0;
+  qWords.forEach((w) => {
+    if (w.length > 2 && tSet.has(w)) score += 1;
+  });
+  return score;
+}
+
+function findBestAnswer(query) {
+  const entries = [
+    ...FAQS.map((f) => ({ q: f.q, a: f.a })),
+    ...POLICIES.map((p) => ({ q: p.q, a: p.a })),
+  ];
+  let best = null;
+  let bestScore = 0;
+  entries.forEach((e) => {
+    const score = scoreMatch(query, e.q + " " + e.a);
+    if (score > bestScore) {
+      bestScore = score;
+      best = e;
+    }
+  });
+  return bestScore >= 1 ? best : null;
+}
+
+function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    { from: "bot", text: "Hi! Ask me about shipping, returns, ingredients, or anything else — if I can't help, I'll get you straight to WhatsApp." },
+  ]);
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
+  }, [messages, open]);
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text) return;
+    const userMsg = { from: "user", text };
+    const match = findBestAnswer(text);
+    const botMsg = match
+      ? { from: "bot", text: match.a }
+      : { from: "bot", text: "I'm not sure about that one — tap below to ask us directly on WhatsApp and we'll get back to you." };
+    setMessages((m) => [...m, userMsg, botMsg]);
+    setInput("");
+  };
+
+  return createPortal(
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-label={open ? "Close chat" : "Open chat"}
+        className="fixed bottom-24 right-5 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-emerald-950 text-stone-50 shadow-lg hover:bg-emerald-900 transition-colors"
+      >
+        {open ? <X className="w-6 h-6" strokeWidth={1.5} /> : <Sparkles className="w-6 h-6" strokeWidth={1.5} />}
+      </button>
+
+      {open && (
+        <div
+          role="dialog"
+          aria-label="Chat"
+          className="fixed bottom-40 right-5 z-40 w-[calc(100%-2.5rem)] max-w-sm h-[420px] bg-stone-50 rounded-2xl shadow-2xl border border-emerald-900/10 flex flex-col overflow-hidden"
+        >
+          <div className="px-4 py-3 border-b border-emerald-900/10 bg-emerald-950 text-stone-50 flex items-center justify-between shrink-0">
+            <span className="font-serif text-lg">Fofo Deluxe Help</span>
+            <button type="button" onClick={() => setOpen(false)} aria-label="Close chat" className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+              <X className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </div>
+
+          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-2">
+            {messages.map((m, i) => (
+              <div key={i} className={`max-w-[85%] text-sm leading-relaxed px-3 py-2 rounded-2xl ${m.from === "bot" ? "self-start bg-white border border-emerald-900/10 text-stone-700" : "self-end bg-emerald-950 text-stone-50"}`}>
+                {m.text}
+              </div>
+            ))}
+            <a
+              href="https://wa.me/447445865238"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="self-start mt-1 text-xs font-medium px-3 py-1.5 rounded-full border border-emerald-950 text-emerald-950 hover:bg-emerald-950/5 transition-colors"
+            >
+              Chat with us on WhatsApp instead
+            </a>
+          </div>
+
+          <form onSubmit={handleSend} className="flex items-center gap-2 px-3 py-3 border-t border-emerald-900/10 bg-white shrink-0">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your question..."
+              className="flex-1 px-3 py-2 rounded-full border border-emerald-950/15 bg-stone-50 text-sm focus:outline-none focus:border-emerald-950/40"
+            />
+            <button
+              type="submit"
+              aria-label="Send"
+              className="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+            >
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </form>
+        </div>
+      )}
+    </>,
+    document.body
+  );
+}
+
+// ---------- NEWSLETTER POPUP: "Get up to 50% off" ----------
+const NEWSLETTER_SEEN_KEY = "fofo_newsletter_seen";
+
+function NewsletterPopup() {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    let seen = false;
+    try {
+      seen = window.localStorage.getItem(NEWSLETTER_SEEN_KEY) === "1";
+    } catch {
+      seen = false;
+    }
+    if (seen) return;
+    const timer = setTimeout(() => setOpen(true), 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    try {
+      window.localStorage.setItem(NEWSLETTER_SEEN_KEY, "1");
+    } catch {
+      // ignore storage errors
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setSubmitted(true);
+    try {
+      window.localStorage.setItem(NEWSLETTER_SEEN_KEY, "1");
+    } catch {
+      // ignore storage errors
+    }
+  };
+
+  if (!open) return null;
+
+  return createPortal(
+    <>
+      <div onClick={dismiss} aria-hidden="true" className="fixed inset-0 bg-black/50 z-40" />
+      <div
+        role="dialog"
+        aria-label="Newsletter offer"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92%] max-w-sm bg-stone-50 rounded-2xl shadow-2xl overflow-hidden"
+      >
+        <div className="relative bg-emerald-950 px-6 py-8 text-center">
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Close"
+            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-stone-50 hover:bg-white/10 transition-colors"
+          >
+            <X className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+          <p className="text-xs uppercase tracking-widest text-amber-400 mb-2">Fofo Deluxe Herbal Skincare</p>
+          <h3 className="font-serif text-3xl text-stone-50 leading-tight">ENJOY UP TO 50% OFF</h3>
+          <p className="text-sm text-stone-300 mt-2">Join our newsletter for exclusive discounts and skincare tips.</p>
+        </div>
+
+        <div className="px-6 py-6">
+          {submitted ? (
+            <div className="text-center">
+              <p className="text-sm text-stone-600 leading-relaxed mb-4">
+                Thanks! Message us on WhatsApp with your email to claim your discount code.
+              </p>
+              <a
+                href={`https://wa.me/447445865238?text=${encodeURIComponent(`Hi! I signed up for the newsletter and would like my discount code. My email: ${email}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+              >
+                Claim on WhatsApp
+              </a>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                className="w-full px-4 py-3 rounded-full border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
+              />
+              <button
+                type="submit"
+                className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+              >
+                Get My Discount
+              </button>
+              <button type="button" onClick={dismiss} className="text-xs text-stone-400 hover:text-stone-600 transition-colors self-center">
+                No thanks
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </>,
+    document.body
+  );
+}
+
 function FofoDeluxeHome() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedTags, setSelectedTags] = useState(["All You Need"]);
@@ -1517,6 +1741,7 @@ function SiteHeader() {
       )}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
+      <NewsletterPopup />
     </header>
   );
 }
