@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { createClient } from "@supabase/supabase-js";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,6 +23,7 @@ import {
   Sparkles,
   Star,
   Truck,
+  User,
   X,
   XCircle,
 } from "lucide-react";
@@ -158,6 +160,8 @@ const SUPABASE_FUNCTION_URL =
 const SUPABASE_URL = "https://vswmuulplauogngowwk.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzd211dWxwbGF1b2duZ2dvd3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4NDk1NjEsImV4cCI6MjA5OTQyNTU2MX0.vIUCR3kjlY60TWVqanWy3g9niHMVjYLZV2pMwURXFOE";
 
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ---- Sample product data (swap for Supabase fetch later) ----
 const PRODUCTS = [
   { id: "p1", name: "Sunburn Face Cream", category: "Face", price: 1800, tagline: "pH balanced, fragranced free, for dry and sensitive skin", rating: 4.8, sold: "1.2K", image: sunburnFaceCreamImg, tags: ["Soothe", "Hydrate"] },
@@ -223,9 +227,34 @@ const SHOP_ALL = [
   { id: "a31", name: "Lip Brush", category: "Face", price: 350, image: realLipBrushImg },
 ];
 
-// ---------- CART (persisted in localStorage, shared across all pages) ----------
-const CART_STORAGE_KEY = "fofo_cart";
+// ---------- AUTH (Supabase) ----------
+const AUTH_MODAL_EVENT = "fofo-open-auth";
+
+function openAuthModal() {
+  window.dispatchEvent(new CustomEvent(AUTH_MODAL_EVENT));
+}
+
+function useAuth() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  return { user, loading, signOut: () => supabase.auth.signOut() };
+}
+
+// ---------- CART (Supabase-backed, one row per signed-in user; requires sign-in) ----------
 const CART_EVENT = "fofo-cart-updated";
+let cartCache = {}; // { [productId]: qty } — mirrors the signed-in user's row in the "carts" table
 
 function findProductById(id) {
   return (
@@ -237,61 +266,80 @@ function findProductById(id) {
   );
 }
 
-function readCartFromStorage() {
-  if (typeof window === "undefined") return {};
-  try {
-    const raw = window.localStorage.getItem(CART_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
+function dispatchCartUpdate() {
+  window.dispatchEvent(new CustomEvent(CART_EVENT));
+}
+
+async function fetchCartFromSupabase(userId) {
+  const { data, error } = await supabase.from("carts").select("items").eq("user_id", userId).maybeSingle();
+  if (error) {
+    console.error("Failed to load cart:", error.message);
     return {};
   }
+  return data?.items || {};
 }
 
-function writeCartToStorage(cart) {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-    window.dispatchEvent(new CustomEvent(CART_EVENT));
-  } catch {
-    // ignore storage errors (e.g. private browsing)
-  }
+async function saveCartToSupabase(userId, email, items) {
+  const { error } = await supabase.from("carts").upsert(
+    { user_id: userId, email, items, updated_at: new Date().toISOString(), reminder_sent_at: null },
+    { onConflict: "user_id" }
+  );
+  if (error) console.error("Failed to save cart:", error.message);
 }
 
-function addToCartStorage(id, qty = 1) {
-  const cart = readCartFromStorage();
-  cart[id] = (cart[id] || 0) + qty;
-  writeCartToStorage(cart);
+// Always fetches fresh before writing, so we never clobber items added from another tab/device.
+async function addToCartRemote(userId, email, id, qty = 1) {
+  const current = await fetchCartFromSupabase(userId);
+  current[id] = (current[id] || 0) + qty;
+  cartCache = current;
+  dispatchCartUpdate();
+  await saveCartToSupabase(userId, email, current);
 }
 
-function setCartQtyStorage(id, qty) {
-  const cart = readCartFromStorage();
-  if (qty <= 0) delete cart[id];
-  else cart[id] = qty;
-  writeCartToStorage(cart);
+async function setCartQtyRemote(userId, email, id, qty) {
+  const current = { ...cartCache };
+  if (qty <= 0) delete current[id];
+  else current[id] = qty;
+  cartCache = current;
+  dispatchCartUpdate();
+  await saveCartToSupabase(userId, email, current);
 }
 
-function removeFromCartStorage(id) {
-  const cart = readCartFromStorage();
-  delete cart[id];
-  writeCartToStorage(cart);
+async function removeFromCartRemote(userId, email, id) {
+  const current = { ...cartCache };
+  delete current[id];
+  cartCache = current;
+  dispatchCartUpdate();
+  await saveCartToSupabase(userId, email, current);
 }
 
-function clearCartStorage() {
-  writeCartToStorage({});
+async function clearCartRemote(userId, email) {
+  cartCache = {};
+  dispatchCartUpdate();
+  await saveCartToSupabase(userId, email, {});
 }
 
 function useCart() {
-  const [cart, setCart] = useState(() => readCartFromStorage());
+  const { user } = useAuth();
+  const [cart, setCart] = useState(cartCache);
 
   useEffect(() => {
-    const sync = () => setCart(readCartFromStorage());
+    const sync = () => setCart({ ...cartCache });
     window.addEventListener(CART_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener(CART_EVENT, sync);
-      window.removeEventListener("storage", sync);
-    };
+    return () => window.removeEventListener(CART_EVENT, sync);
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      cartCache = {};
+      dispatchCartUpdate();
+      return;
+    }
+    fetchCartFromSupabase(user.id).then((items) => {
+      cartCache = items;
+      dispatchCartUpdate();
+    });
+  }, [user?.id]);
 
   const items = useMemo(() => {
     return Object.entries(cart)
@@ -310,11 +358,12 @@ function useCart() {
     items,
     count,
     total,
-    addToCart: addToCartStorage,
-    setQty: setCartQtyStorage,
-    removeItem: removeFromCartStorage,
-    clearCart: clearCartStorage,
+    addToCart: (id, qty = 1) => (user ? addToCartRemote(user.id, user.email, id, qty) : Promise.resolve()),
+    setQty: (id, qty) => (user ? setCartQtyRemote(user.id, user.email, id, qty) : Promise.resolve()),
+    removeItem: (id) => (user ? removeFromCartRemote(user.id, user.email, id) : Promise.resolve()),
+    clearCart: () => (user ? clearCartRemote(user.id, user.email) : Promise.resolve()),
   };
+
 }
 
 const BENEFIT_TAGS = ["All You Need", "Cleanse", "Hydrate", "Exfoliate", "Soothe", "Brighten", "Nourish", "Detox"];
@@ -432,10 +481,15 @@ function StarRating({ rating }) {
 
 // ---------- BUY (WhatsApp) + ADD TO CART, used on every product card ----------
 function ProductActions({ item, mtClass = "mt-1" }) {
+  const { user } = useAuth();
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
-    addToCartStorage(item.id, 1);
+    if (!user) {
+      openAuthModal();
+      return;
+    }
+    addToCartRemote(user.id, user.email, item.id, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
@@ -561,7 +615,7 @@ function CartDrawer({ open, onClose }) {
               href={paypalLink(total)}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-[#0070ba] text-stone-50 hover:bg-[#005ea6] transition-colors"
+              className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
             >
               Checkout with PayPal
             </a>
@@ -582,6 +636,184 @@ function CartDrawer({ open, onClose }) {
             </button>
           </div>
         )}
+      </div>
+    </>,
+    document.body
+  );
+}
+
+// ---------- AUTH MODAL: sign in / register / forgot password ----------
+function AuthModal({ open, onClose }) {
+  const [mode, setMode] = useState("signin"); // signin | register | forgot
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setMode("signin");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setError("");
+      setMessage("");
+    }
+  }, [open]);
+
+  const switchMode = (next) => {
+    setMode(next);
+    setError("");
+    setMessage("");
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) setError(error.message);
+    else onClose();
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (password !== confirmPassword) {
+      setError("Passwords don't match.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({ email, password });
+    setLoading(false);
+    if (error) setError(error.message);
+    else setMessage("Check your email to confirm your account, then sign in.");
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) setError(error.message);
+    else setMessage("Check your email for a link to reset your password.");
+  };
+
+  const handleSubmit = mode === "signin" ? handleSignIn : mode === "register" ? handleRegister : handleForgotPassword;
+
+  return createPortal(
+    <>
+      <div
+        onClick={onClose}
+        aria-hidden="true"
+        className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
+      <div
+        role="dialog"
+        aria-label="Account"
+        className={`fixed top-1/2 left-1/2 z-50 w-[92%] max-w-sm bg-stone-50 rounded-2xl shadow-2xl transition-all duration-300 ${
+          open
+            ? "opacity-100 scale-100 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
+            : "opacity-0 scale-95 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        }`}
+      >
+        <div className="flex items-center justify-between px-6 py-4 border-b border-emerald-900/10">
+          <h3 className="font-serif text-xl text-emerald-950">
+            {mode === "signin" && "Sign In"}
+            {mode === "register" && "Create Account"}
+            {mode === "forgot" && "Reset Password"}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-emerald-950/5 transition-colors"
+          >
+            <X className="w-4 h-4" strokeWidth={1.5} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="px-6 py-5 flex flex-col gap-3">
+          <div>
+            <label className="text-xs text-stone-500">Email</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full mt-1 px-3 py-2 rounded-lg border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
+            />
+          </div>
+
+          {mode !== "forgot" && (
+            <div>
+              <label className="text-xs text-stone-500">Password</label>
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full mt-1 px-3 py-2 rounded-lg border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
+              />
+            </div>
+          )}
+
+          {mode === "register" && (
+            <div>
+              <label className="text-xs text-stone-500">Confirm Password</label>
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full mt-1 px-3 py-2 rounded-lg border border-emerald-950/15 bg-white text-sm focus:outline-none focus:border-emerald-950/40"
+              />
+            </div>
+          )}
+
+          {error && <p className="text-xs text-red-600">{error}</p>}
+          {message && <p className="text-xs text-emerald-700">{message}</p>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors disabled:opacity-60 mt-1"
+          >
+            {loading ? "Please wait…" : mode === "signin" ? "Sign In" : mode === "register" ? "Create Account" : "Send Reset Link"}
+          </button>
+
+          <div className="flex items-center justify-between text-xs text-stone-500 mt-1">
+            {mode === "signin" && (
+              <>
+                <button type="button" onClick={() => switchMode("register")} className="hover:text-amber-700 transition-colors">
+                  Create an account
+                </button>
+                <button type="button" onClick={() => switchMode("forgot")} className="hover:text-amber-700 transition-colors">
+                  Forgot password?
+                </button>
+              </>
+            )}
+            {mode !== "signin" && (
+              <button type="button" onClick={() => switchMode("signin")} className="hover:text-amber-700 transition-colors">
+                Back to sign in
+              </button>
+            )}
+          </div>
+        </form>
       </div>
     </>,
     document.body
@@ -1171,7 +1403,17 @@ function FofoDeluxeHome() {
 function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { count } = useCart();
+  const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    const open = () => setAuthOpen(true);
+    window.addEventListener(AUTH_MODAL_EVENT, open);
+    return () => window.removeEventListener(AUTH_MODAL_EVENT, open);
+  }, []);
+
   const navLinks = [
     { label: "About", href: "/about" },
     { label: "Explore Best Sellers", href: "/best-sellers" },
@@ -1205,6 +1447,34 @@ function SiteHeader() {
         </a>
 
         <div className="flex-1 flex items-center justify-end gap-2">
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => (user ? setAccountMenuOpen((v) => !v) : setAuthOpen(true))}
+              aria-label={user ? "Account menu" : "Sign in"}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-950/15 text-emerald-950 hover:bg-emerald-950/5 transition-colors shrink-0"
+            >
+              <User className="w-[18px] h-[18px]" strokeWidth={1.5} />
+            </button>
+            {user && accountMenuOpen && (
+              <>
+                <div className="fixed inset-0 z-20" onClick={() => setAccountMenuOpen(false)} aria-hidden="true" />
+                <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl border border-emerald-900/10 shadow-lg py-2 z-30">
+                  <p className="px-4 py-1.5 text-xs text-stone-400 truncate">{user.email}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      signOut();
+                      setAccountMenuOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm text-emerald-950 hover:bg-emerald-950/5 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
           <button
             type="button"
             onClick={() => setCartOpen(true)}
@@ -1246,6 +1516,7 @@ function SiteHeader() {
         </nav>
       )}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </header>
   );
 }
@@ -1872,6 +2143,91 @@ function CheckoutCancelled() {
 }
 
 // ---------- ROUTER ----------
+// ---- /reset-password (link from the "forgot password" email) ----
+function ResetPasswordPage() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (password !== confirmPassword) {
+      setError("Passwords don't match.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.updateUser({ password });
+    setLoading(false);
+    if (error) setError(error.message);
+    else setDone(true);
+  };
+
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans flex items-center justify-center px-5">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+        .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+        .font-sans { font-family: 'Roboto', sans-serif !important; }
+        body { font-family: 'Roboto', sans-serif; }
+      `}</style>
+      <div className="w-full max-w-sm bg-white rounded-2xl border border-emerald-900/10 p-6">
+        <h1 className="font-serif text-2xl text-emerald-950 mb-1">Set a New Password</h1>
+        {done ? (
+          <>
+            <p className="text-sm text-stone-500 mt-3">Your password has been updated. You can now sign in with it.</p>
+            <a
+              href="/"
+              className="inline-block mt-4 text-sm font-medium px-4 py-2.5 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
+            >
+              Back to site
+            </a>
+          </>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-3">
+            <div>
+              <label className="text-xs text-stone-500">New Password</label>
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full mt-1 px-3 py-2 rounded-lg border border-emerald-950/15 bg-stone-50 text-sm focus:outline-none focus:border-emerald-950/40"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-stone-500">Confirm Password</label>
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full mt-1 px-3 py-2 rounded-lg border border-emerald-950/15 bg-stone-50 text-sm focus:outline-none focus:border-emerald-950/40"
+              />
+            </div>
+            {error && <p className="text-xs text-red-600">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors disabled:opacity-60 mt-1"
+            >
+              {loading ? "Updating…" : "Update Password"}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [path, setPath] = useState(window.location.pathname);
 
@@ -1888,5 +2244,6 @@ export default function App() {
   if (path === "/sets-kits") return <SetsKitsPage />;
   if (path === "/shop-all") return <ShopAllPage />;
   if (path === "/support") return <SupportPage />;
+  if (path === "/reset-password") return <ResetPasswordPage />;
   return <FofoDeluxeHome />;
 }
