@@ -1024,7 +1024,7 @@ function NewsletterPopup() {
                 type="submit"
                 className="w-full text-center text-sm font-medium px-4 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors"
               >
-                AND, YES, I WANT IN!
+                YES, I WANT IN!
               </button>
               <button type="button" onClick={dismiss} className="text-xs text-stone-400 hover:text-stone-600 transition-colors self-center">
                 No thanks
