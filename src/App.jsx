@@ -971,7 +971,7 @@ function NewsletterPopup() {
   return createPortal(
     <>
       {tagOpen && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center">
+        <div className="fixed top-1/2 left-5 -translate-y-1/2 z-40 flex flex-col items-start">
           <button
             type="button"
             onClick={() => setTagOpen(false)}
