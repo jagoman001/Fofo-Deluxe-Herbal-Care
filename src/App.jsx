@@ -156,8 +156,8 @@ const snowWhiteOilVanillaImg = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABA
 
 // ---- Config: swap in your real Supabase project values ----
 const SUPABASE_FUNCTION_URL =
-  "https://vswmuulplauogngowwk.supabase.co/functions/v1/create-checkout-session";
-const SUPABASE_URL = "https://vswmuulplauogngowwk.supabase.co";
+  "https://vswmuulplauognggowwk.supabase.co/functions/v1/create-checkout-session";
+const SUPABASE_URL = "https://vswmuulplauognggowwk.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzd211dWxwbGF1b2duZ2dvd3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM4NDk1NjEsImV4cCI6MjA5OTQyNTU2MX0.vIUCR3kjlY60TWVqanWy3g9niHMVjYLZV2pMwURXFOE";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
