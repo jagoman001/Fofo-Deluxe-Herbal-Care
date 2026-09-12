@@ -438,11 +438,11 @@ function formatGBP(pence) {
   return `£${(pence / 100).toFixed(2)}`;
 }
 
-// TODO: replace with your real PayPal.me username, e.g. "fofodeluxe"
-const PAYPAL_ME_USERNAME = "YOUR_PAYPAL_USERNAME";
+// Real PayPal checkout link, with the cart total appended so it pre-fills on PayPal's page.
+const PAYPAL_CHECKOUT_URL = "https://www.paypal.com/qrcodes/managed/14dbbc8d-4e72-4b2c-9638-4949395a9d67";
 
 function paypalLink(pence) {
-  return `https://paypal.me/${PAYPAL_ME_USERNAME}/${(pence / 100).toFixed(2)}GBP`;
+  return `${PAYPAL_CHECKOUT_URL}?amount=${(pence / 100).toFixed(2)}`;
 }
 
 function Reveal({ children, className = "" }) {
@@ -1538,7 +1538,13 @@ function FofoDeluxeHome() {
             <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
               <FacebookIcon className="w-[18px] h-[18px]" />
             </a>
-            <a href="#" aria-label="TikTok" className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors">
+            <a
+              href="https://www.tiktok.com/@fofodeluxee"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="w-11 h-11 rounded-full border border-stone-50/25 flex items-center justify-center hover:bg-stone-50/10 transition-colors"
+            >
               <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden="true">
                 <path d="M16.6 5.82c-.7-.77-1.09-1.77-1.09-2.82H12.9v13.44c0 1.34-1.08 2.42-2.42 2.42a2.42 2.42 0 0 1-2.42-2.42 2.42 2.42 0 0 1 2.42-2.42c.24 0 .48.04.7.1V10.4a5.2 5.2 0 0 0-.7-.05A5.24 5.24 0 0 0 5.24 15.6a5.24 5.24 0 0 0 5.24 5.24c2.9 0 5.24-2.35 5.24-5.24V9.02a8.16 8.16 0 0 0 4.76 1.53V7.85a4.85 4.85 0 0 1-3.88-2.03z"/>
               </svg>
@@ -1804,6 +1810,17 @@ function SiteFooter() {
             <span>Privacy Policy</span>
             <span>Return Policy</span>
           </div>
+        </div>
+        <div className="max-w-6xl mx-auto px-5 mt-3 text-center text-xs text-stone-400">
+          Tech Support:{" "}
+          <a
+            href="https://wa.me/2349074318065"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-amber-700 transition-colors"
+          >
+            QD Designs
+          </a>
         </div>
       </div>
     </footer>
