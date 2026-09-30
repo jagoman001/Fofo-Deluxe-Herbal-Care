@@ -2182,7 +2182,7 @@ function AboutPage() {
                 We believe in the transformative power of African botanicals, combining nature's finest ingredients with carefully crafted organic skincare to help people achieve healthier, clearer, and more radiant skin.
               </p>
               <a
-                href="/#shop"
+                href="/shop-all"
                 className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-950 text-stone-50 text-sm font-medium tracking-wide hover:bg-emerald-900 transition-colors mb-10"
               >
                 Shop Now
