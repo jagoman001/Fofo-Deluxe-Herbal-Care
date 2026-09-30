@@ -370,6 +370,100 @@ const BENEFIT_TAGS = ["All You Need", "Cleanse", "Hydrate", "Exfoliate", "Soothe
 
 const CATEGORIES = ["All", "Face", "Body", "Hair", "Bundles"];
 
+// ---- Full product page content. Add an entry here (keyed by product id) to give
+// that product its own detail page at /product/<id>. Products without an entry
+// here simply don't have a detail page yet. ----
+const PRODUCT_DETAILS = {
+  a01: {
+    description: [
+      "A targeted facial cleanser created for skin prone to spots, blemishes and excess oil. It gently cleanses away daily buildup, excess sebum and impurities, leaving the skin feeling fresh, clean and comfortable.",
+      "With regular use, it helps make cleansing a more purposeful part of your skincare routine, supporting a complexion that looks clearer, smoother and more even. Ideal for keeping blemish-prone skin feeling clean without making your routine complicated.",
+    ],
+    skinType: "Oily, combination, blemish-prone and acne-prone skin.",
+    howToUse:
+      "Wet your face with lukewarm water and apply a small amount of cleanser. Gently massage over the face in circular motions, avoiding the eye area. Rinse thoroughly and pat dry. Use morning and evening.",
+    keyIngredients: ["Salicylic Acid", "Niacinamide", "Tea Tree Oil", "Aloe Vera", "Vitamin E"],
+    discountOffers: ["Free delivery within the UK", "Up to 50% discount on bulk orders"],
+  },
+  a02: {
+    description: [
+      "A gentle facial cleanser infused with the calming, refreshing character of lavender. It lifts away everyday dirt, excess oil and impurities while leaving the skin feeling clean, soft and comfortable.",
+      "Ideal for making cleansing a soothing part of your daily routine, this cleanser helps maintain a fresh, balanced-looking complexion without leaving the skin feeling overly dry or stripped. Lavender-based cleansers are commonly positioned for gentle, calming and everyday cleansing.",
+    ],
+    skinType: "All skin types, especially dry, sensitive, normal and combination skin.",
+    howToUse:
+      "Apply a small amount to damp skin and gently massage over the face in circular motions. Rinse thoroughly with lukewarm water and pat dry. Use morning and evening.",
+    keyIngredients: ["Lavender", "Aloe Vera", "Glycerin", "Calendula", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a03: {
+    description: [
+      "A convenient 2-in-1 facial cleanser and toner created for skin prone to acne, pimples, excess oil and clogged pores. It helps remove daily dirt, oil and impurities while leaving the skin feeling fresh and thoroughly cleansed.",
+      "Designed to simplify your skincare routine, this formula combines cleansing and toning in one step, helping skin look clearer, smoother and more balanced with regular use. Acne-focused cleanser and toner formulas commonly feature ingredients such as salicylic acid, tea tree and niacinamide.",
+    ],
+    skinType: "Oily, combination, acne-prone and blemish-prone skin.",
+    howToUse:
+      "Apply to damp skin and gently massage over the face and neck using circular motions, avoiding the eye area. Rinse thoroughly with lukewarm water and pat dry. Use morning and evening.",
+    keyIngredients: ["Salicylic Acid", "Tea Tree Oil", "Niacinamide", "Aloe Vera", "Green Tea Extract"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a04: {
+    description: [
+      "A simple everyday facial cleanser designed to remove dirt, excess oil, makeup residue and daily impurities without leaving the skin feeling stripped. It provides a clean, refreshed base for the rest of your skincare routine.",
+      "A well-formulated facial cleanser should cleanse effectively while helping the skin maintain its natural moisture balance. This makes it an easy everyday essential for keeping the complexion feeling fresh, soft and comfortable.",
+    ],
+    skinType: "All skin types, including normal, combination, oily and dry skin.",
+    howToUse:
+      "Wet the face with lukewarm water and apply a small amount of cleanser. Gently massage over the face in circular motions, avoiding the eye area. Rinse thoroughly and pat dry. Use morning and evening.",
+    keyIngredients: ["Glycerin", "Niacinamide", "Panthenol", "Hyaluronic Acid", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a06: {
+    description: [
+      "A soothing, refreshing aloe vera gel designed to provide lightweight hydration and comfort for the skin. Its cooling gel texture makes it a versatile addition to an everyday skincare routine, especially when skin needs a little extra moisture and soothing care.",
+      "Aloe vera is widely used in skincare for its hydrating and soothing properties, making this gel suitable for use on the face and body. It absorbs easily and leaves the skin feeling fresh, soft and replenished.",
+    ],
+    skinType: "All skin types, including dry, sensitive, normal, combination and oily skin.",
+    howToUse:
+      "Apply a generous amount to clean, dry skin and gently massage until absorbed. Use on the face or body as needed. Can be used daily and reapplied whenever the skin needs additional hydration or soothing.",
+    keyIngredients: ["Aloe Vera", "Glycerin", "Vitamin E", "Panthenol", "Hyaluronic Acid"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a07: {
+    description: [
+      "A concentrated facial serum designed to improve the appearance of uneven skin tone, dullness and dark spots. It is made for anyone looking to bring more radiance and clarity to the complexion while supporting a smoother, more even-looking finish.",
+      "Brightening serums commonly combine ingredients such as vitamin C, niacinamide and alpha arbutin to target the appearance of pigmentation and support a more radiant complexion. Consistent use alongside daily sun protection is an important part of maintaining an even-looking skin tone.",
+    ],
+    skinType: "All skin types, including normal, combination, oily and dry skin.",
+    howToUse:
+      "Apply a few drops to clean, dry skin after cleansing. Gently massage into the face and neck, avoiding the eye area. Follow with moisturiser. Use once or twice daily, and apply sunscreen during the day.",
+    keyIngredients: ["Vitamin C", "Niacinamide", "Alpha Arbutin", "Kojic Acid", "Licorice Extract"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a08: {
+    description: [
+      "A brightening facial serum designed to revive dull-looking skin and support a more radiant, even-looking complexion. Vitamin C is a popular skincare ingredient for helping improve the appearance of uneven tone and pigmentation while supporting a healthy-looking glow.",
+      "Lightweight and easy to layer, it works well as part of a daily skincare routine for skin that looks tired, dull or uneven. Regular use can help the complexion appear brighter, smoother and more refreshed.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "After cleansing, apply a few drops to the face and neck. Gently massage or pat into the skin until absorbed. Follow with moisturiser and sunscreen during the day. Start with once daily and increase according to your skin's tolerance.",
+    keyIngredients: ["Vitamin C", "Vitamin E", "Ferulic Acid", "Hyaluronic Acid", "Niacinamide"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a09: {
+    description: [
+      "A convenient sunscreen spray designed to help protect the skin from the damaging effects of sun exposure. Its lightweight spray format makes daily application quick and easy, whether you're at home, travelling or on the go.",
+      "Daily sunscreen is an important part of a skincare routine, particularly when using brightening or exfoliating products. Regular sun protection helps prevent sun-related pigmentation and helps maintain a more even-looking complexion.",
+    ],
+    skinType: "All skin types.",
+    howToUse:
+      "Apply generously and evenly to exposed skin before sun exposure. Do not spray directly onto the face; spray into your hands first, then apply to the face. Reapply regularly, especially after sweating, swimming or towel drying. Follow the product's labelled SPF and application instructions.",
+    keyIngredients: ["Zinc Oxide", "Titanium Dioxide", "Vitamin E", "Aloe Vera", "Glycerin"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+};
+
 const TESTIMONIALS = [
   {
     name: "Amara O.",
@@ -1888,15 +1982,17 @@ function BestSellersPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {BEST_SELLERS.map((product) => (
             <div key={product.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-emerald-900/10 hover:border-emerald-900/25 transition-colors">
-              <div className="aspect-square overflow-hidden">
+              <a href={`/product/${product.id}`} className="aspect-square overflow-hidden block">
                 <img src={product.image} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
+              </a>
               <div className="p-3.5 md:p-4 flex flex-col gap-1 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-amber-700">{product.category}</span>
                   <StarRating rating={product.rating} />
                 </div>
-                <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug">{product.name}</h3>
+                <a href={`/product/${product.id}`}>
+                  <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug hover:text-amber-700 transition-colors">{product.name}</h3>
+                </a>
                 <p className="text-xs text-stone-500 leading-relaxed mb-2 flex-1">{product.tagline}</p>
                 <ProductActions item={product} mtClass="mt-1" />
               </div>
@@ -1948,15 +2044,17 @@ function SetsKitsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {SETS.map((set) => (
             <div key={set.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-emerald-900/10 hover:border-emerald-900/25 transition-colors">
-              <div className="aspect-square overflow-hidden">
+              <a href={`/product/${set.id}`} className="aspect-square overflow-hidden block">
                 <img src={set.image} alt={set.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
+              </a>
               <div className="p-3.5 md:p-4 flex flex-col gap-1 flex-1">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-amber-700">{set.pieces}</span>
                   <StarRating rating={set.rating} />
                 </div>
-                <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug">{set.name}</h3>
+                <a href={`/product/${set.id}`}>
+                  <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug hover:text-amber-700 transition-colors">{set.name}</h3>
+                </a>
                 <p className="text-xs text-stone-500 leading-relaxed mb-2 flex-1">{set.tagline}</p>
                 <ProductActions item={set} mtClass="mt-1" />
               </div>
@@ -2029,12 +2127,14 @@ function ShopAllPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filtered.map((product) => (
             <div key={product.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-emerald-900/10 hover:border-emerald-900/25 transition-colors">
-              <div className="aspect-square overflow-hidden">
+              <a href={`/product/${product.id}`} className="aspect-square overflow-hidden block">
                 <img src={product.image} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
+              </a>
               <div className="p-3.5 md:p-4 flex flex-col gap-1 flex-1">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-amber-700">{product.category}</span>
-                <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug">{product.name}</h3>
+                <a href={`/product/${product.id}`}>
+                  <h3 className="font-serif text-base md:text-lg text-emerald-950 leading-snug hover:text-amber-700 transition-colors">{product.name}</h3>
+                </a>
                 <ProductActions item={product} mtClass="mt-2" />
               </div>
             </div>
@@ -2398,6 +2498,137 @@ function CheckoutCancelled() {
 
 // ---------- ROUTER ----------
 // ---- /reset-password (link from the "forgot password" email) ----
+// ---- /product/<id> — full product detail page ----
+function ProductDetailPage({ id }) {
+  const product = findProductById(id);
+  const details = PRODUCT_DETAILS[id];
+
+  if (!product) {
+    return (
+      <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+          .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+          .font-sans { font-family: 'Roboto', sans-serif !important; }
+          body { font-family: 'Roboto', sans-serif; }
+        `}</style>
+        <SiteHeader />
+        <div className="max-w-2xl mx-auto px-5 py-24 text-center">
+          <h1 className="font-serif text-3xl text-emerald-950 mb-3">Product not found</h1>
+          <p className="text-sm text-stone-500 mb-6">This product may have been removed or the link is incorrect.</p>
+          <a href="/shop-all" className="inline-block text-sm font-medium px-6 py-3 rounded-full bg-emerald-950 text-stone-50 hover:bg-emerald-900 transition-colors">
+            Back to Shop All
+          </a>
+        </div>
+        <SiteFooter />
+        <FloatingWhatsApp />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-stone-900 font-sans">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap');
+        .font-serif { font-family: 'Bebas Neue', sans-serif !important; letter-spacing: 0.02em; }
+        .font-sans { font-family: 'Roboto', sans-serif !important; }
+        body { font-family: 'Roboto', sans-serif; }
+        html { scroll-behavior: smooth; }
+      `}</style>
+
+      <div className="bg-emerald-950 text-stone-200 text-xs py-2 overflow-hidden">
+        <div className="flex justify-center gap-2">
+          <span>Free shipping within UK</span>
+        </div>
+      </div>
+
+      <SiteHeader />
+
+      <div className="max-w-6xl mx-auto px-5 pt-5 text-xs text-stone-400">
+        <a href="/shop-all" className="hover:text-amber-700 transition-colors">Shop All</a>
+        <span className="mx-1.5">/</span>
+        <span className="text-stone-500">{product.name}</span>
+      </div>
+
+      <section className="max-w-6xl mx-auto px-5 py-8 grid md:grid-cols-2 gap-8 md:gap-12">
+        {/* Gallery */}
+        <div className="bg-white rounded-2xl overflow-hidden border border-emerald-900/10 aspect-square">
+          <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+        </div>
+
+        {/* Info */}
+        <div className="flex flex-col">
+          {product.category && (
+            <span className="font-mono text-[11px] uppercase tracking-widest text-amber-700 mb-1">{product.category}</span>
+          )}
+          <h1 className="font-serif text-3xl md:text-4xl text-emerald-950 leading-tight mb-2">{product.name}</h1>
+          {product.rating && (
+            <div className="mb-3">
+              <StarRating rating={product.rating} />
+            </div>
+          )}
+          <p className="font-mono text-xl text-stone-900 mb-4">{formatGBP(product.price)}</p>
+
+          {details?.skinType && (
+            <div className="flex flex-wrap gap-2 mb-5">
+              <span className="text-xs px-3 py-1.5 rounded-full bg-emerald-950/5 text-emerald-950 border border-emerald-900/10">
+                Skin Type: {details.skinType}
+              </span>
+            </div>
+          )}
+
+          <ProductActions item={product} mtClass="mt-1" />
+
+          {details?.description && (
+            <div className="mt-8 flex flex-col gap-3">
+              {details.description.map((para, i) => (
+                <p key={i} className="text-sm text-stone-600 leading-relaxed">{para}</p>
+              ))}
+            </div>
+          )}
+
+          {details?.keyIngredients && (
+            <div className="mt-6">
+              <h3 className="font-serif text-lg text-emerald-950 mb-2">Key Ingredients</h3>
+              <div className="flex flex-wrap gap-2">
+                {details.keyIngredients.map((ing) => (
+                  <span key={ing} className="text-xs px-3 py-1.5 rounded-full bg-white border border-emerald-900/10 text-stone-600">
+                    {ing}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {details?.howToUse && (
+            <div className="mt-6">
+              <h3 className="font-serif text-lg text-emerald-950 mb-2">How to Use</h3>
+              <p className="text-sm text-stone-600 leading-relaxed">{details.howToUse}</p>
+            </div>
+          )}
+
+          {details?.discountOffers && (
+            <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+              <h3 className="font-serif text-base text-emerald-950 mb-1.5">Offers</h3>
+              <ul className="text-sm text-stone-600 flex flex-col gap-1">
+                {details.discountOffers.map((offer) => (
+                  <li key={offer} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" strokeWidth={1.5} />
+                    {offer}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <SiteFooter />
+      <FloatingWhatsApp />
+    </div>
+  );
+}
+
 function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -2499,5 +2730,6 @@ export default function App() {
   if (path === "/shop-all") return <ShopAllPage />;
   if (path === "/support") return <SupportPage />;
   if (path === "/reset-password") return <ResetPasswordPage />;
+  if (path.startsWith("/product/")) return <ProductDetailPage id={path.replace("/product/", "")} />;
   return <FofoDeluxeHome />;
 }
