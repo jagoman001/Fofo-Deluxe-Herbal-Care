@@ -462,6 +462,213 @@ const PRODUCT_DETAILS = {
     keyIngredients: ["Zinc Oxide", "Titanium Dioxide", "Vitamin E", "Aloe Vera", "Glycerin"],
     discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
   },
+  a10: {
+    description: [
+      "A simple lip-care set designed to keep the lips soft, smooth and well cared for. It brings together the essential steps for everyday lip maintenance, helping to gently remove dry surface skin while keeping the lips moisturised and comfortable.",
+      "Used regularly, it helps leave the lips feeling smoother, softer and more conditioned, making it an easy addition to any daily beauty routine.",
+    ],
+    skinType: "All skin types.",
+    howToUse:
+      "Use the lip scrub first to gently exfoliate the lips, then follow with the lip balm to moisturise and protect. Use the scrub 1\u20132 times a week and apply the balm whenever needed throughout the day.",
+    keyIngredients: ["Shea Butter", "Vitamin E", "Beeswax", "Sugar", "Jojoba Oil"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a12: {
+    description: [
+      "A refreshing daily shower gel designed to cleanse the body of sweat, oil and everyday impurities while leaving the skin feeling clean, soft and refreshed. Its easy-to-use formula creates a comfortable lather without making your shower routine complicated.",
+      "Ideal for everyday bathing, it leaves the skin feeling fresh and ready for the rest of your body-care routine.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply a small amount to wet skin using your hands, a sponge or shower puff. Work into a gentle lather and massage over the body, then rinse thoroughly. Use daily.",
+    keyIngredients: ["Glycerin", "Aloe Vera", "Vitamin E", "Panthenol", "Chamomile Extract"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a13: {
+    description: [
+      "A generous-size daily shower gel made for a refreshing, comfortable cleanse. It helps remove sweat, excess oil and everyday buildup while leaving the skin feeling clean, soft and refreshed.",
+      "The 500ml size makes it a practical choice for regular use and a simple staple for a full body-care routine.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply to wet skin using your hands, sponge or shower puff. Massage gently over the body to create a lather, then rinse thoroughly. Use daily.",
+    keyIngredients: ["Glycerin", "Aloe Vera", "Vitamin E", "Panthenol", "Chamomile Extract"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a14: {
+    description: [
+      "A rich body butter created to give dry skin the extra moisture and comfort it needs. The creamy texture helps soften rough areas while leaving the skin feeling nourished, smooth and supple.",
+      "Ideal after bathing, it works well as part of a daily body-care routine, particularly on areas that tend to become dry such as the elbows, knees, hands and legs.",
+    ],
+    skinType: "Dry, very dry, normal and combination skin.",
+    howToUse:
+      "Apply generously to clean, slightly damp skin and massage until absorbed. Pay extra attention to dry areas. Use daily or whenever the skin needs additional moisture.",
+    keyIngredients: ["Shea Butter", "Cocoa Butter", "Mango Butter", "Vitamin E", "Jojoba Oil"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a15: {
+    description: [
+      "A rich, deeply moisturising body butter in a generous 1-litre size, created for consistent everyday body care. It helps soften dry skin and leaves the body feeling smooth, nourished and comfortable without making the routine complicated.",
+      "The rich texture makes it especially useful for dry areas and for anyone who prefers a more substantial moisturiser after bathing.",
+    ],
+    skinType: "Dry, very dry, normal and combination skin.",
+    howToUse:
+      "Apply generously to clean, slightly damp skin and massage into the body until absorbed. Concentrate on elbows, knees, hands, feet and other dry areas. Use daily.",
+    keyIngredients: ["Shea Butter", "Cocoa Butter", "Mango Butter", "Vitamin E", "Jojoba Oil"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a16: {
+    description: [
+      "A lightweight moisturising milk designed to hydrate and soften the face and body. It helps replenish moisture while leaving the skin feeling smooth, comfortable and cared for without the heavier feel of a traditional body butter.",
+      "Suitable for everyday use, it fits easily into a simple morning and evening moisturising routine.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply to clean skin and massage gently until fully absorbed. Use on the face and body as needed, preferably after cleansing or bathing.",
+    keyIngredients: ["Glycerin", "Shea Butter", "Aloe Vera", "Hyaluronic Acid", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a17: {
+    description: [
+      "A generous 1-litre moisturising milk designed to keep both the face and body feeling soft, smooth and hydrated. Its lighter texture makes it easy to use every day, helping maintain comfortable, moisturised skin from head to toe.",
+      "A practical choice for consistent body care, especially for those who prefer a lightweight moisturiser that can be used generously and regularly.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply to clean skin and massage gently until absorbed. Use over the face and body as part of your daily skincare routine, especially after bathing.",
+    keyIngredients: ["Glycerin", "Shea Butter", "Aloe Vera", "Hyaluronic Acid", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a18: {
+    description: [
+      "A nourishing body oil designed to soften dry skin and improve the feel of rough, dehydrated areas. Its blend of conditioning oils helps lock in moisture while leaving the skin feeling smooth, supple and comfortable.",
+      "It can be used on its own or layered over body lotion to give the skin a more nourished finish, making it particularly useful for dry skin and areas that need extra care.",
+    ],
+    skinType: "Dry, very dry, normal and combination skin.",
+    howToUse:
+      "Apply a small amount to clean, slightly damp skin and massage gently until absorbed. Concentrate on dry areas such as elbows, knees, hands and legs. Use daily or as needed.",
+    keyIngredients: ["Jojoba Oil", "Sweet Almond Oil", "Argan Oil", "Rosehip Oil", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a19: {
+    description: [
+      "A lightweight body oil created for skin that looks dull, uneven or dry. It combines nourishing oils with commonly used brightening and conditioning ingredients to help the skin look smoother, more radiant and more even over time.",
+      "The oil texture makes it easy to massage into the skin, leaving a soft, healthy-looking finish without making body care feel complicated.",
+    ],
+    skinType: "All skin types, especially uneven, dull and dry skin.",
+    howToUse:
+      "Apply a small amount to clean, slightly damp skin and massage evenly over the body. Use once or twice daily. During the day, apply sunscreen to exposed areas.",
+    keyIngredients: ["Vitamin C", "Alpha Arbutin", "Niacinamide", "Jojoba Oil", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a20: {
+    description: [
+      "A larger-size brightening body oil designed for regular use on dull, uneven and dry-looking skin. It combines lightweight nourishing oils with popular brightening ingredients to support a smoother, more radiant and even-looking complexion.",
+      "The 250ml size makes it ideal for consistent full-body use, leaving the skin feeling soft, conditioned and comfortable.",
+    ],
+    skinType: "All skin types, especially uneven, dull and dry skin.",
+    howToUse:
+      "Apply a small amount to clean, slightly damp skin and massage evenly over the body. Use once or twice daily. During the day, apply sunscreen to exposed areas.",
+    keyIngredients: ["Vitamin C", "Alpha Arbutin", "Niacinamide", "Jojoba Oil", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a21: {
+    description: [
+      "A body-cleansing formula built around glutathione and collagen, designed to cleanse the skin while supporting a softer, smoother and more refreshed appearance. It helps remove everyday sweat, oil and impurities while fitting easily into a regular body-care routine.",
+      "Used consistently with moisturising products, it leaves the skin feeling clean, conditioned and ready for the next step of your routine.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply to wet skin using your hands, sponge or shower puff. Massage gently over the body to create a lather, then rinse thoroughly. Use daily.",
+    keyIngredients: ["Glutathione", "Collagen", "Glycerin", "Vitamin E", "Aloe Vera"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a22: {
+    description: [
+      "A generous 1-litre body cleanser formulated around glutathione and collagen for everyday cleansing and body care. It helps wash away sweat, excess oil and impurities while leaving the skin feeling clean, soft and refreshed.",
+      "The larger size makes it suitable for regular full-body use, especially as part of a consistent cleansing and moisturising routine.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Apply to wet skin with your hands, sponge or shower puff. Massage gently over the body to create a lather and rinse thoroughly. Use daily.",
+    keyIngredients: ["Glutathione", "Collagen", "Glycerin", "Vitamin E", "Aloe Vera"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a23: {
+    description: [
+      "A traditional-style Moroccan black body polish designed to cleanse and exfoliate the skin, helping lift away surface buildup and dead skin cells for a smoother feel. It leaves the body feeling thoroughly cleansed, softer and refreshed, making it especially useful as part of a weekly body-care ritual.",
+    ],
+    skinType: "Normal, combination, oily and rough-textured skin.",
+    howToUse:
+      "Apply to warm, damp skin and massage gently over the body. Leave for a few minutes, then rinse thoroughly. For a deeper exfoliating treatment, use with a body exfoliating glove. Use 1\u20132 times a week.",
+    keyIngredients: ["Olive Oil", "Argan Oil", "Eucalyptus", "Vitamin E", "Black Soap"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a24: {
+    description: [
+      "A generous 1-litre Moroccan-style black body polish designed for deep cleansing and regular exfoliation. It helps remove surface buildup and dead skin cells, leaving the body feeling smoother, softer and refreshed.",
+      "Inspired by traditional black soap body treatments, it works particularly well as part of a weekly exfoliating routine and can be paired with an exfoliating glove for a more thorough polish.",
+    ],
+    skinType: "Normal, combination, oily and rough-textured skin.",
+    howToUse:
+      "Apply to warm, damp skin and massage gently over the body. Leave for a few minutes, then rinse thoroughly. For a deeper exfoliation, use with a body exfoliating glove. Use 1\u20132 times a week.",
+    keyIngredients: ["Olive Oil", "Argan Oil", "Eucalyptus", "Vitamin E", "Black Soap"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a27: {
+    description: [
+      "A nourishing hair oil designed to condition the hair, improve softness and add a healthy-looking shine. A blend of lightweight and richer botanical oils helps smooth the hair and reduce the dry, rough feel that can come with everyday styling and environmental exposure.",
+      "It can be used on the scalp or lengths depending on your hair-care routine, and works particularly well as a finishing oil or pre-wash treatment.",
+    ],
+    skinType: "All hair types, including dry, textured, curly and chemically treated hair.",
+    howToUse:
+      "Apply a small amount to the scalp and massage gently, or smooth through the lengths and ends of the hair. Use as a daily finishing oil or as a pre-shampoo treatment. Start with a small amount to avoid weighing the hair down.",
+    keyIngredients: ["Argan Oil", "Jojoba Oil", "Coconut Oil", "Castor Oil", "Rosemary Oil", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a28: {
+    description: [
+      "A rich conditioning hair cream designed to soften, moisturise and improve the manageability of dry or textured hair. It helps reduce the rough feel of dry strands while leaving the hair softer, smoother and easier to style.",
+    ],
+    skinType: "All hair types, especially dry, curly, coily and textured hair.",
+    howToUse:
+      "Apply a small amount to clean, damp or dry hair, focusing on the lengths and ends. Work through the hair with your fingers or a comb and style as desired. Use as needed.",
+    keyIngredients: ["Shea Butter", "Coconut Oil", "Olive Oil", "Argan Oil", "Aloe Vera", "Vitamin E"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a29: {
+    description: [
+      "An everyday lip balm created to keep the lips moisturised, soft and comfortable. Its conditioning formula helps seal in moisture and protect the lips from the dry, tight feeling that can come with everyday exposure to weather and environmental conditions.",
+      "It is easy to keep on hand throughout the day and can be used alone or after lip exfoliation.",
+    ],
+    skinType: "All skin types, including dry and chapped lips.",
+    howToUse:
+      "Apply directly to the lips whenever they feel dry or need additional moisture. Reapply throughout the day as needed.",
+    keyIngredients: ["Shea Butter", "Beeswax", "Vitamin E", "Jojoba Oil", "Coconut Oil"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a30: {
+    description: [
+      "A nourishing lip treatment designed to give dry lips extra moisture and comfort. Its rich texture helps soften the lips and provides a more intensive conditioning step than a regular lip balm.",
+      "Use it as part of your evening routine or whenever your lips need extra care, particularly after exfoliation.",
+    ],
+    skinType: "All skin types, especially dry and chapped lips.",
+    howToUse:
+      "Apply a generous layer to clean lips and leave on as an overnight treatment. Gently wipe away any excess in the morning. Use whenever the lips need additional moisture.",
+    keyIngredients: ["Shea Butter", "Hyaluronic Acid", "Vitamin E", "Jojoba Oil", "Beeswax"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a31: {
+    description: [
+      "A practical lip brush designed for precise and controlled application of lip products. Its shape makes it easier to apply lip balm, lip mask, gloss, lipstick and other lip treatments evenly, particularly around the edges of the lips.",
+      "A simple addition to any makeup or lip-care collection, it can also be useful for creating a more defined finish when applying colour.",
+    ],
+    skinType: "Suitable for all skin types.",
+    howToUse:
+      "Apply your chosen lip product to the brush and use gentle, controlled strokes to spread the product evenly across the lips. Clean the brush regularly after use.",
+    keyIngredients: ["Synthetic Bristles", "Aluminium Ferrule", "Wooden or Plastic Handle"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
 };
 
 const TESTIMONIALS = [
@@ -915,6 +1122,28 @@ function AuthModal({ open, onClose }) {
 }
 
 // ---------- FAQ CHAT WIDGET: free keyword-matched answers, WhatsApp fallback ----------
+// ---- Simple category icon for an ingredient name (no photos, no licensing risk) ----
+function ingredientIconInfo(name) {
+  const n = name.toLowerCase();
+  if (/vitamin|ferulic|arbutin|kojic|collagen|glutathione/.test(n)) {
+    return { Icon: Sparkles, bg: "bg-amber-50", text: "text-amber-700" };
+  }
+  if (/acid|niacinamide|salicylic|hyaluronic/.test(n)) {
+    return { Icon: Droplets, bg: "bg-sky-50", text: "text-sky-700" };
+  }
+  if (/butter|oil|beeswax|wax/.test(n)) {
+    return { Icon: Droplets, bg: "bg-orange-50", text: "text-orange-700" };
+  }
+  if (/zinc|titanium|mineral|soap/.test(n)) {
+    return { Icon: ShieldCheck, bg: "bg-stone-100", text: "text-stone-600" };
+  }
+  if (/brush|bristle|ferrule|handle/.test(n)) {
+    return { Icon: Sparkles, bg: "bg-stone-100", text: "text-stone-600" };
+  }
+  // Default: plant/botanical (leaves, extracts, lavender, aloe, tea, etc.)
+  return { Icon: Leaf, bg: "bg-emerald-50", text: "text-emerald-700" };
+}
+
 function scoreMatch(query, text) {
   const qWords = query.toLowerCase().match(/[a-z0-9]+/g) || [];
   const tWords = (text || "").toLowerCase().match(/[a-z0-9]+/g) || [];
@@ -2589,13 +2818,19 @@ function ProductDetailPage({ id }) {
 
           {details?.keyIngredients && (
             <div className="mt-6">
-              <h3 className="font-serif text-lg text-emerald-950 mb-2">Key Ingredients</h3>
-              <div className="flex flex-wrap gap-2">
-                {details.keyIngredients.map((ing) => (
-                  <span key={ing} className="text-xs px-3 py-1.5 rounded-full bg-white border border-emerald-900/10 text-stone-600">
-                    {ing}
-                  </span>
-                ))}
+              <h3 className="font-serif text-lg text-emerald-950 mb-3">Key Ingredients</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {details.keyIngredients.map((ing) => {
+                  const { Icon, bg, text } = ingredientIconInfo(ing);
+                  return (
+                    <div key={ing} className="flex items-center gap-2.5">
+                      <div className={`w-10 h-10 shrink-0 rounded-full ${bg} flex items-center justify-center`}>
+                        <Icon className={`w-4.5 h-4.5 ${text}`} strokeWidth={1.5} />
+                      </div>
+                      <span className="text-xs text-stone-600 leading-snug">{ing}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
