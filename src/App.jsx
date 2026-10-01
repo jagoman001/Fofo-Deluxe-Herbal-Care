@@ -1144,6 +1144,17 @@ function AuthModal({ open, onClose }) {
 }
 
 // ---------- FAQ CHAT WIDGET: free keyword-matched answers, WhatsApp fallback ----------
+// ---- Real ingredient photos (free-to-use under the Unsplash License). ----
+// Add more entries here as you source/buy more — key must match the ingredient
+// name exactly as written in PRODUCT_DETAILS. Anything not listed here falls
+// back to a plain icon badge automatically.
+const INGREDIENT_PHOTOS = {
+  "Shea Butter": "https://images.unsplash.com/photo-1573812461383-e5f8b759d12e?fm=jpg&q=60&w=400&auto=format&fit=crop",
+  "Tea Tree Oil": "https://images.unsplash.com/photo-1602943543714-cf535b048440?fm=jpg&q=60&w=400&auto=format&fit=crop",
+  Lavender: "https://images.unsplash.com/photo-1528756514091-dee5ecaa3278?fm=jpg&q=60&w=400&auto=format&fit=crop",
+  "Aloe Vera": "https://images.unsplash.com/photo-1570295835271-04c05b4ed943?fm=jpg&q=60&w=400&auto=format&fit=crop",
+};
+
 // ---- Simple category icon for an ingredient name (no photos, no licensing risk) ----
 function ingredientIconInfo(name) {
   const n = name.toLowerCase();
@@ -2852,19 +2863,13 @@ function ProductDetailPage({ id }) {
 
           {details?.keyIngredients && (
             <div className="mt-6">
-              <h3 className="font-serif text-lg text-emerald-950 mb-3">Key Ingredients</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {details.keyIngredients.map((ing) => {
-                  const { Icon, bg, text } = ingredientIconInfo(ing);
-                  return (
-                    <div key={ing} className="flex items-center gap-2.5">
-                      <div className={`w-10 h-10 shrink-0 rounded-full ${bg} flex items-center justify-center`}>
-                        <Icon className={`w-4.5 h-4.5 ${text}`} strokeWidth={1.5} />
-                      </div>
-                      <span className="text-xs text-stone-600 leading-snug">{ing}</span>
-                    </div>
-                  );
-                })}
+              <h3 className="font-serif text-lg text-emerald-950 mb-2">Key Ingredients</h3>
+              <div className="flex flex-wrap gap-2">
+                {details.keyIngredients.map((ing) => (
+                  <span key={ing} className="text-xs px-3 py-1.5 rounded-full bg-white border border-emerald-900/10 text-stone-600">
+                    {ing}
+                  </span>
+                ))}
               </div>
             </div>
           )}
