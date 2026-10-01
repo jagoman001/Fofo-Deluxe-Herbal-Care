@@ -658,6 +658,28 @@ const PRODUCT_DETAILS = {
     keyIngredients: ["Shea Butter", "Hyaluronic Acid", "Vitamin E", "Jojoba Oil", "Beeswax"],
     discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
   },
+  a11: {
+    description: [
+      "A gentle exfoliating lip scrub created to smooth away dry, flaky surface skin and leave the lips feeling softer and more polished. It combines exfoliating particles with nourishing oils and butters to help keep the lips feeling comfortable rather than stripped.",
+      "Use it as a simple prep step before applying lip balm, lip mask or colour for lips that feel smoother and look more cared for.",
+    ],
+    skinType: "All skin types, including dry and chapped lips.",
+    howToUse:
+      "Apply a small amount to clean lips and gently massage in circular motions for 30–60 seconds. Wipe away or rinse with water, then follow with a moisturising lip balm. Use 1–2 times a week.",
+    keyIngredients: ["Sugar", "Shea Butter", "Jojoba Oil", "Vitamin E", "Coconut Oil"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+  a05: {
+    description: [
+      "A refreshing daily facial wash designed to gently remove dirt, excess oil, sweat and everyday impurities from the skin. It leaves the face feeling clean, fresh and comfortable without making cleansing feel harsh or complicated.",
+      "An easy everyday cleanser that works well as the first step in any skincare routine, leaving the skin feeling refreshed and ready for the rest of your products.",
+    ],
+    skinType: "All skin types, including normal, dry, combination and oily skin.",
+    howToUse:
+      "Wet the face with lukewarm water and apply a small amount of the facial wash. Gently massage over the face and neck, avoiding the eye area. Rinse thoroughly and pat the skin dry. Use morning and evening.",
+    keyIngredients: ["Glycerin", "Aloe Vera", "Panthenol", "Vitamin E", "Chamomile Extract"],
+    discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
   a31: {
     description: [
       "A practical lip brush designed for precise and controlled application of lip products. Its shape makes it easier to apply lip balm, lip mask, gloss, lipstick and other lip treatments evenly, particularly around the edges of the lips.",
@@ -2104,13 +2126,22 @@ function SiteFooter() {
           <div>
             <h4 className="font-serif text-emerald-950 mb-4">Shop</h4>
             <ul className="flex flex-col gap-3 text-sm text-stone-500">
-              <li>Face</li><li>Body</li><li>Hair</li><li>Bundles</li><li>Best Sellers</li><li>Sets &amp; Kits</li>
+              <li><a href="/shop-all?category=Face" className="hover:text-amber-700 transition-colors">Face</a></li>
+              <li><a href="/shop-all?category=Body" className="hover:text-amber-700 transition-colors">Body</a></li>
+              <li><a href="/shop-all?category=Hair" className="hover:text-amber-700 transition-colors">Hair</a></li>
+              <li><a href="/sets-kits" className="hover:text-amber-700 transition-colors">Bundles</a></li>
+              <li><a href="/best-sellers" className="hover:text-amber-700 transition-colors">Best Sellers</a></li>
+              <li><a href="/sets-kits" className="hover:text-amber-700 transition-colors">Sets &amp; Kits</a></li>
             </ul>
           </div>
           <div>
             <h4 className="font-serif text-emerald-950 mb-4">Categories</h4>
             <ul className="flex flex-col gap-3 text-sm text-stone-500">
-              {BENEFIT_TAGS.filter((tag) => tag !== "All You Need").map((tag) => <li key={tag}>{tag}</li>)}
+              {BENEFIT_TAGS.filter((tag) => tag !== "All You Need").map((tag) => (
+                <li key={tag}>
+                  <a href="/shop-all" className="hover:text-amber-700 transition-colors">{tag}</a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
@@ -2300,8 +2331,11 @@ function SetsKitsPage() {
 
 // ---- /shop-all ----
 function ShopAllPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
   const categories = ["All", "Face", "Body", "Hair"];
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get("category");
+    return categories.includes(requested) ? requested : "All";
+  });
   const filtered = activeCategory === "All" ? SHOP_ALL : SHOP_ALL.filter((p) => p.category === activeCategory);
 
   return (
