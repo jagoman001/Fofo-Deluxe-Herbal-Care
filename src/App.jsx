@@ -186,11 +186,11 @@ const BEST_SELLERS = [
 const SETS = [
   { id: "s1", name: "Anti Ageing Set", price: 14000, tagline: "Nourish, Renew, Glow — a complete 4-piece anti-ageing routine", rating: 4.9, sold: "1.6K", image: antiAgeingSetImg, pieces: "4-Piece Set" },
   { id: "s2", name: "Hair Set", price: 7000, tagline: "Nourish & strengthen naturally with Hair Cream + Hair Oil", rating: 4.8, sold: "2.3K", image: hairDuoBoxImg, pieces: "2-Piece Set" },
-  { id: "s3", name: "Acne and Pimple Solution Set", price: 12000, tagline: "A complete 4-step solution for clear, healthy skin", rating: 4.9, sold: "3.4K", image: acnePimpleSetImg, pieces: "4-Piece Set" },
+  { id: "s3", name: "Acne and Pimple Solution Set", price: 12000, tagline: "A complete 6-piece routine to cleanse, exfoliate and target spots", rating: 4.9, sold: "3.4K", image: acnePimpleSetImg, pieces: "6-Piece Set" },
   { id: "s4", name: "Pink Lips Set", price: 2500, tagline: "Nourish, exfoliate & glow with our 4-piece lip care set", rating: 4.9, sold: "2.1K", image: pinkLipsSetImg, pieces: "4-Piece Set" },
   { id: "s5", name: "Knuckle Care Set", price: 7500, tagline: "Cleanser, scrub, cream & oil to gently brighten dark knuckles", rating: 4.8, sold: "1.1K", image: knuckleCareSetImg, pieces: "4-Piece Set" },
   { id: "s6", name: "Omo Pupa Set", price: 4800, tagline: "Brightening moisture infusion with hyaluronic acid & niacinamide 5%", rating: 4.8, sold: "1.2K", image: omoPupaSetImg, pieces: "1.69 fl oz" },
-  { id: "s7", name: "Snow White Set", price: 4800, tagline: "A powerful duo that brightens and evens skin tone for a radiant glow", rating: 4.8, sold: "1.5K", image: snowWhiteSetImg, pieces: "2-Piece Set" },
+  { id: "s7", name: "Snow White Set", price: 4800, tagline: "A complete 6-piece body care routine for brighter, smoother skin", rating: 4.8, sold: "1.5K", image: snowWhiteSetImg, pieces: "6-Piece Set" },
   { id: "s8", name: "Face Set", price: 5000, tagline: "Our complete face care essentials, beautifully boxed", rating: 4.9, sold: "1.3K", image: faceSetImg, pieces: "Gift Set" },
   { id: "s9", name: "Sunscreen Set", price: 5000, tagline: "Broad spectrum SPF 50+ protection with niacinamide & vitamin C", rating: 4.8, sold: "1.7K", image: sunscreenSetImg, pieces: "SPF 50+ PA++++" },
 ];
@@ -690,6 +690,66 @@ const PRODUCT_DETAILS = {
       "Apply your chosen lip product to the brush and use gentle, controlled strokes to spread the product evenly across the lips. Clean the brush regularly after use.",
     keyIngredients: ["Synthetic Bristles", "Aluminium Ferrule", "Wooden or Plastic Handle"],
     discountOffers: ["Up to 50% discount on bulk orders", "Free delivery within the UK"],
+  },
+
+  // ---- Sets (also use productsIncluded + setValue, shown only on set pages) ----
+  s3: {
+    description: [
+      "A complete acne and pimple care routine designed to cleanse, exfoliate and target the appearance of spots and blemishes. With six products working together, the routine helps remove buildup, excess oil and dead skin while supporting a cleaner, smoother and more even-looking complexion.",
+      "The set gives you the different steps needed to care for blemish-prone skin, from cleansing and exfoliation to targeted spot care.",
+    ],
+    productsIncluded: [
+      "Bar Soap",
+      "Face Black Soap",
+      "Dead Skin Remover",
+      "Cleanser for Acne and Pimple",
+      "Spot Remover Cleanser",
+      "Spot Remover Fad Cream",
+    ],
+    skinType: "Oily, combination, acne-prone and blemish-prone skin.",
+    howToUse: [
+      "Start with the Bar Soap or Face Black Soap to cleanse the skin. Follow with the Cleanser for Acne and Pimple as part of your regular facial cleansing routine. Use the Dead Skin Remover as an exfoliating step according to your skin's tolerance.",
+      "Use the Spot Remover Cleanser during your cleansing routine, then apply the Spot Remover Fad Cream to targeted areas as directed. Avoid over-exfoliating and introduce products gradually if your skin is not used to an active routine.",
+    ],
+    keyIngredients: ["Salicylic Acid", "Niacinamide", "Tea Tree Oil", "Aloe Vera", "Vitamin E"],
+    setValue: { separately: 18000, price: 12000 },
+    discountOffers: ["Free delivery within the UK"],
+  },
+  s7: {
+    description: [
+      "A complete body care routine designed to cleanse, nourish, exfoliate and support a brighter, smoother and more even-looking complexion. With six products working together, the Snow White Set provides a complete routine for everyday body care, helping to remove buildup, improve the appearance of dull skin and leave the skin feeling soft, smooth and refreshed.",
+      "The set combines cleansing, exfoliation, hydration and targeted skincare steps to give your body a more complete and consistent care routine.",
+    ],
+    productsIncluded: [
+      "Snow White Body Cream",
+      "Snow White Oil",
+      "Snow White Body Scrub",
+      "Snow White Soap",
+      "Snow White Serum",
+      "Snow White Shower Gel",
+    ],
+    skinType: "Suitable for normal, dry, combination and dull-looking skin. Ideal for anyone looking for a complete body care routine focused on smoother, softer and more radiant-looking skin.",
+    howToUse: [
+      "Start with the Snow White Soap or Snow White Shower Gel to cleanse the skin.",
+      "Use the Snow White Body Scrub as an exfoliating step according to your skin's tolerance. Avoid over-exfoliating and allow the skin to adjust to the routine.",
+      "Apply the Snow White Serum to clean skin as directed, focusing on areas that need additional care.",
+      "Follow with the Snow White Body Cream to moisturize and nourish the skin. The Snow White Oil can be applied after the cream or used as directed to help seal in moisture and leave the skin feeling soft and smooth.",
+      "For best results, use the products consistently as part of your regular body care routine.",
+    ],
+    keyIngredients: [
+      "Kojic Acid",
+      "Lactic Acid",
+      "Niacinamide",
+      "Vitamin C",
+      "Glutathione",
+      "Aloe Vera",
+      "Shea Butter",
+      "Rosehip Oil",
+      "Turmeric Extract",
+      "Natural Fruit Extracts",
+    ],
+    setValue: { separately: 6500, price: 4800 },
+    discountOffers: ["Free delivery within the UK"],
   },
 };
 
@@ -2776,6 +2836,7 @@ function CheckoutCancelled() {
 function ProductDetailPage({ id }) {
   const product = findProductById(id);
   const details = PRODUCT_DETAILS[id];
+  const isSet = SETS.some((s) => s.id === id);
 
   if (!product) {
     return (
@@ -2819,7 +2880,11 @@ function ProductDetailPage({ id }) {
       <SiteHeader />
 
       <div className="max-w-6xl mx-auto px-5 pt-5 text-xs text-stone-400">
-        <a href="/shop-all" className="hover:text-amber-700 transition-colors">Shop All</a>
+        {isSet ? (
+          <a href="/sets-kits" className="hover:text-amber-700 transition-colors">Sets &amp; Kits</a>
+        ) : (
+          <a href="/shop-all" className="hover:text-amber-700 transition-colors">Shop All</a>
+        )}
         <span className="mx-1.5">/</span>
         <span className="text-stone-500">{product.name}</span>
       </div>
@@ -2832,8 +2897,8 @@ function ProductDetailPage({ id }) {
 
         {/* Info */}
         <div className="flex flex-col">
-          {product.category && (
-            <span className="font-mono text-[11px] uppercase tracking-widest text-amber-700 mb-1">{product.category}</span>
+          {(product.category || product.pieces) && (
+            <span className="font-mono text-[11px] uppercase tracking-widest text-amber-700 mb-1">{product.category || product.pieces}</span>
           )}
           <h1 className="font-serif text-3xl md:text-4xl text-emerald-950 leading-tight mb-2">{product.name}</h1>
           {product.rating && (
@@ -2861,6 +2926,20 @@ function ProductDetailPage({ id }) {
             </div>
           )}
 
+          {details?.productsIncluded && (
+            <div className="mt-6">
+              <h3 className="font-serif text-lg text-emerald-950 mb-2">Products Included</h3>
+              <ul className="text-sm text-stone-600 grid sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                {details.productsIncluded.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" strokeWidth={1.5} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {details?.keyIngredients && (
             <div className="mt-6">
               <h3 className="font-serif text-lg text-emerald-950 mb-2">Key Ingredients</h3>
@@ -2877,7 +2956,31 @@ function ProductDetailPage({ id }) {
           {details?.howToUse && (
             <div className="mt-6">
               <h3 className="font-serif text-lg text-emerald-950 mb-2">How to Use</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">{details.howToUse}</p>
+              <div className="flex flex-col gap-2">
+                {[].concat(details.howToUse).map((para, i) => (
+                  <p key={i} className="text-sm text-stone-600 leading-relaxed">{para}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {details?.setValue && (
+            <div className="mt-6 bg-white border border-emerald-900/10 rounded-xl px-4 py-3">
+              <h3 className="font-serif text-base text-emerald-950 mb-1.5">Set Value</h3>
+              <dl className="text-sm text-stone-600 flex flex-col gap-1">
+                <div className="flex justify-between gap-4">
+                  <dt>Total value when purchased separately</dt>
+                  <dd className="font-mono line-through text-stone-400">{formatGBP(details.setValue.separately)}</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt>Set price</dt>
+                  <dd className="font-mono text-stone-900">{formatGBP(details.setValue.price)}</dd>
+                </div>
+                <div className="flex justify-between gap-4 font-medium text-emerald-800">
+                  <dt>You save</dt>
+                  <dd className="font-mono">{formatGBP(details.setValue.separately - details.setValue.price)}</dd>
+                </div>
+              </dl>
             </div>
           )}
 
