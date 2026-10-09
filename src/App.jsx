@@ -173,7 +173,7 @@ const PRODUCTS = [
 ];
 
 const BEST_SELLERS = [
-  { id: "b1", name: "Acne and Pimple Solution Set", category: "Face", price: 3200, tagline: "A complete 4-step solution for clear, healthy skin", rating: 4.9, sold: "3.4K", image: acnePimpleSetImg, tags: ["Cleanse", "Soothe"] },
+  { id: "b1", name: "Acne and Pimple Solution Set", category: "Face", price: 12000, tagline: "A complete 4-step solution for clear, healthy skin", rating: 4.9, sold: "3.4K", image: acnePimpleSetImg, tags: ["Cleanse", "Soothe"] },
   { id: "b2", name: "Spot Remover Cleanser", category: "Face", price: 1600, tagline: "Diminishes the appearance of dark spots", rating: 4.9, sold: "4.6K", image: spotRemoverCleanserImg, tags: ["Cleanse", "Brighten"] },
   { id: "b3", name: "Hair Cream & Oil Duo", category: "Hair", price: 2900, tagline: "Deep nourishment that strengthens & softens hair", rating: 4.8, sold: "3.9K", image: hairCreamOilDuoImg, tags: ["Nourish"] },
   { id: "b4", name: "Pink Lips Set", category: "Face", price: 1400, tagline: "Hydrate, nourish & enhance for soft, glowing lips", rating: 4.9, sold: "5.2K", image: pinkLipsImg, tags: ["Hydrate", "Nourish"] },
