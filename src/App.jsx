@@ -753,6 +753,9 @@ const PRODUCT_DETAILS = {
   },
 };
 
+// The home page best-seller card for the Acne and Pimple Solution Set (b1) shows the same set.
+PRODUCT_DETAILS.b1 = PRODUCT_DETAILS.s3;
+
 const TESTIMONIALS = [
   {
     name: "Amara O.",
